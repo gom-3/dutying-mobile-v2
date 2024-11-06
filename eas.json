@@ -1,0 +1,37 @@
+{
+  "cli": {
+    "version": ">= 4.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "credentialsSource": "local"
+    },
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      },
+      "distribution": "internal"
+    },
+    "production": {
+      "autoIncrement": true,
+      "ios": {
+        "credentialsSource": "local"
+      },
+      "android": {
+        "credentialsSource": "remote"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "gom3.official@gmail.com",
+        "ascAppId": "6466558189",
+        "appleTeamId": "Y4HPW9GX7Y"
+      }
+    }
+  }
+}

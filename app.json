@@ -1,36 +1,163 @@
 {
   "expo": {
-    "name": "dutying-mobile-v2",
+    "name": "듀팅",
+    "owner": "dutying",
     "slug": "dutying-mobile-v2",
-    "version": "1.0.0",
+    "version": "1.1.40",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
+    "icon": "./src/assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme": "dutying",
+    "plugins": [
+      "expo-apple-authentication",
+      [
+        "./app.plugin.js",
+        {
+          "widgetName": "widget",
+          "ios": {
+            "devTeamId": "Y4HPW9GX7Y",
+            "appGroupIdentifier": "group.expo.modules.widgetsync.data"
+          }
+        }
+      ],
+      [
+        "expo-calendar",
+        {
+          "calendarPermission": "개인 일정을 앱에서 함께 관리하기 위해 캘린더 권한이 필요합니다.",
+          "remindersPermission": "개인 일정을 앱에서 함께 관리하기 위해 캘린더 권한이 필요합니다."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "프로필 사진 업로드를 위해 앨범 접근 권한이 필요합니다.",
+          "cameraPermission": "프로필 사진 업로드를 위해 카메라 접근 권한이 필요합니다."
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ],
+      [
+        "@react-native-seoul/kakao-login",
+        {
+          "kakaoAppKey": "1bcf231af91f55cd3ca892cce7dce246",
+          "kotlinVersion": "1.9.0"
+        }
+      ],
+      [
+        "airbridge-expo-sdk",
+        {
+          "appName": "dutying",
+          "appToken": "cfde524ff73c47a8a5c863327579af6f"
+        }
+      ],
+      "expo-asset",
+      "expo-font"
+    ],
+    "experiments": {
+      "tsconfigPaths": true
+    },
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./src/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+      "buildNumber": "1.0.5",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "usesAppleSignIn": true,
+      "supportsTablet": false,
+      "infoPlist": {
+        "NSCalendarsFullAccessUsageDescription": "개인 일정을 앱에서 함께 관리하기 위해 캘린더 권한이 필요합니다.",
+        "NSRemindersFullAccessUsageDescription": "개인 일정을 앱에서 함께 관리하기 위해 캘린더 권한이 필요합니다."
+      },
+      "bundleIdentifier": "com.gom3.dutying",
+      "associatedDomains": ["applinks:dutying.airbridge.io", "applinks:dutying.deeplink.page"],
+      "entitlements": {
+        "com.apple.security.application-groups": ["group.expo.modules.widgetsync.data"]
       }
     },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+    "android": {
+      "enableProguardInReleaseBuilds": true,
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "android.permission.READ_CALENDAR",
+        "android.permission.WRITE_CALENDAR",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.gom3.dutying",
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 16,
+      "intentFilters": [
+        {
+          "autoVerify": true,
+          "action": "VIEW",
+          "data": {
+            "scheme": "https",
+            "host": "dutying.airbridge.io"
+          },
+          "category": ["BROWSABLE", "DEFAULT"]
+        },
+        {
+          "autoVerify": true,
+          "action": "VIEW",
+          "data": {
+            "scheme": "https",
+            "host": "dutying.deeplink.page"
+          },
+          "category": ["BROWSABLE", "DEFAULT"]
+        },
+        {
+          "autoVerify": true,
+          "action": "VIEW",
+          "data": {
+            "scheme": "http",
+            "host": "dutying.airbridge.io"
+          },
+          "category": ["BROWSABLE", "DEFAULT"]
+        },
+        {
+          "autoVerify": true,
+          "action": "VIEW",
+          "data": {
+            "scheme": "http",
+            "host": "dutying.deeplink.page"
+          },
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
-    "plugins": [
-      "expo-router"
-    ],
-    "experiments": {
-      "typedRoutes": true
+    "web": {
+      "favicon": "./src/assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9f6c848d-2c00-4196-96c6-ad9b8b5fd145",
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "targetName": "widget",
+                  "bundleIdentifier": "com.gom3.dutying.widget",
+                  "entitlements": {
+                    "com.apple.security.application-groups": ["group.expo.modules.widgetsync.data"]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
     }
   }
 }
