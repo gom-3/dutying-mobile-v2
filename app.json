@@ -10,16 +10,16 @@
     "scheme": "dutying",
     "plugins": [
       "expo-apple-authentication",
-      [
-        "./app.plugin.js",
-        {
-          "widgetName": "widget",
-          "ios": {
-            "devTeamId": "Y4HPW9GX7Y",
-            "appGroupIdentifier": "group.expo.modules.widgetsync.data"
-          }
-        }
-      ],
+      // [
+      //   "./app.plugin.js",
+      //   {
+      //     "widgetName": "widget",
+      //     "ios": {
+      //       "devTeamId": "Y4HPW9GX7Y",
+      //       "appGroupIdentifier": "group.expo.modules.widgetsync.data"
+      //     }
+      //   }
+      // ],
       [
         "expo-calendar",
         {
@@ -37,8 +37,14 @@
       [
         "expo-build-properties",
         {
+          "android": {
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "buildToolsVersion": "35.0.0"
+          },
           "ios": {
-            "useFrameworks": "static"
+            "useFrameworks": "static",
+            "deploymentTarget": "15.1"
           }
         }
       ],
@@ -81,7 +87,8 @@
       "associatedDomains": ["applinks:dutying.airbridge.io", "applinks:dutying.deeplink.page"],
       "entitlements": {
         "com.apple.security.application-groups": ["group.expo.modules.widgetsync.data"]
-      }
+      },
+      "appleTeamId": "Y4HPW9GX7Y"
     },
     "android": {
       "enableProguardInReleaseBuilds": true,
