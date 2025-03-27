@@ -1,4 +1,4 @@
-import { useLinkProps } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Alert } from 'react-native';
@@ -23,7 +23,7 @@ const useProfile = () => {
   const [randomPressed, setRandomPressed] = useState(false);
   const [photoPressed, setPhotoPressed] = useState(false);
 
-  const { onPress: navigateToHome } = useLinkProps({ to: { screen: 'Onboarding' } });
+  const linkTo = useLinkTo();
 
   const { mutate: signupMutate } = useMutation({
     mutationFn: ({ accountId, name, profileImgBase64 }: SignupRequestDTO) =>
@@ -31,7 +31,7 @@ const useProfile = () => {
     onSuccess: (data) => {
       setAccountState('account', data);
       setState('isLoading', false);
-      navigateToHome();
+      linkTo('Onboarding');
     },
     onError: () => {
       setState('isLoading', false);

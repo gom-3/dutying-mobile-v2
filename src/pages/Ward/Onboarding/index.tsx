@@ -1,4 +1,4 @@
-import { useLinkProps } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import { useState } from 'react';
 import { Text, Image, StyleSheet, View, Pressable } from 'react-native';
 import PagerView, { type PagerViewOnPageSelectedEvent } from 'react-native-pager-view';
@@ -30,11 +30,11 @@ const guideText = [
 const WardOnboardingPage = () => {
   const [page, setPage] = useState(0);
   const [setState] = useOnboardingStore((state) => [state.setState]);
-  const { onPress } = useLinkProps({ to: { screen: 'Ward' } });
+  const linkTo = useLinkTo();
 
   const endOnboarding = () => {
     setState('ward', true);
-    onPress();
+    linkTo('Ward');
   };
 
   const pageScrollHandler = (e: PagerViewOnPageSelectedEvent) => {

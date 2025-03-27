@@ -121,7 +121,10 @@ const ScheduleCard = ({ isCardOpen }: Props) => {
       <BackDrop clickHandler={backDropPressHandler} />
       <Animated.View entering={FadeInDown.duration(250)} style={styles.scheduleCardContainer}>
         <Carousel
-          panGestureHandlerProps={{ activeOffsetX: [-10, 10] }}
+          onConfigurePanGesture={(gesture) => {
+            'worklet';
+            gesture.activeOffsetX([-10, 10]);
+          }}
           loop={false}
           ref={carouselRef}
           data={thisMonthCalendar}

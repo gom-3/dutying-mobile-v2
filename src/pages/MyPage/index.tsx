@@ -1,4 +1,4 @@
-import { useLinkProps } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import { useMutation } from '@tanstack/react-query';
 import * as Linking from 'expo-linking';
 import LottieView from 'lottie-react-native';
@@ -9,6 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import { deleteAccount, editProfile } from '@/api/account';
 import { quitWard } from '@/api/ward';
+import signupAnimation from '@/assets/animations/signup-animation.json';
 import { images } from '@/assets/images/profiles';
 import CameraIcon from '@/assets/svgs/camera.svg';
 import CheckIcon from '@/assets/svgs/check-white.svg';
@@ -37,11 +38,11 @@ const MyPage = () => {
   const [name, setName] = useState(account.name);
   const [profile, setProfile] = useState(account.profileImgBase64);
   const textRef = useRef<TextInput>(null);
-  const { onPress: navigateToWard } = useLinkProps({ to: { screen: 'Ward' } });
+
+  const linkTo = useLinkTo();
 
   const { mutate: editProfileMutate, isPending: changeProfileLoading } = useMutation({
-    mutationFn: ({ name, image, accountId }: { name: string; image: string; accountId: number }) =>
-      editProfile(name, image, accountId),
+    mutationFn: (image: string) => editProfile(name, image, account.accountId),
     onSuccess: (data) => {
       setState('account', data);
       Toast.show({
@@ -90,7 +91,7 @@ const MyPage = () => {
   const { mutate: quitWardMutate, isPending } = useMutation({
     mutationFn: ({ wardId }: { wardId: number }) => quitWard(wardId),
     onSuccess: () => {
-      navigateToWard();
+      linkTo('Ward');
     },
   });
 
@@ -337,12 +338,7 @@ const MyPage = () => {
             top: 0,
           }}
         >
-          <LottieView
-            style={{ width: 200, height: 200 }}
-            source={require('@/assets/animations/signup-animation.json')}
-            autoPlay
-            loop
-          />
+          <LottieView style={{ width: 200, height: 200 }} source={signupAnimation} autoPlay loop />
         </View>
       )}
     </PageViewContainer>

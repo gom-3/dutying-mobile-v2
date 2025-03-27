@@ -1,4 +1,4 @@
-import { useLinkProps } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import { useQueryClient } from '@tanstack/react-query';
 import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
 import SelectedLogoIcon from '@/assets/svgs/logo-selected.svg';
@@ -16,26 +16,23 @@ interface Props {
 
 const NavigationBar = ({ page }: Props) => {
   const queryClient = useQueryClient();
-  const { onPress: navigateToHome } = useLinkProps({ to: { screen: 'Home' } });
-  const { onPress: navigateToSocial } = useLinkProps({ to: { screen: 'Moim' } });
-  const { onPress: navigateToWard } = useLinkProps({ to: { screen: 'Ward' } });
-  // const { onPress: navigateToWard } = useLinkProps({ to: { screen: 'WardCalendarPage' } });
+  const linkTo = useLinkTo();
 
   const pressHomeTab = () => {
     firebaseLogEvent('navigation_home');
-    navigateToHome();
+    linkTo('Home');
   };
 
   const pressSocialTab = () => {
     firebaseLogEvent('navigation_social');
-    navigateToSocial();
+    linkTo('Moim');
   };
 
   const pressWardTab = () => {
     firebaseLogEvent('navigate_ward');
     queryClient.invalidateQueries({ queryKey: ['getMyAccount'] });
     queryClient.refetchQueries({ queryKey: ['getMyAccount'] });
-    navigateToWard();
+    linkTo('Ward');
   };
 
   return (

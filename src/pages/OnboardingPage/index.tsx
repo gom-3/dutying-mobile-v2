@@ -1,4 +1,4 @@
-import { useLinkProps } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import { useState } from 'react';
 import { Text, Image, StyleSheet, View, Pressable } from 'react-native';
 import PagerView, { type PagerViewOnPageSelectedEvent } from 'react-native-pager-view';
@@ -22,7 +22,8 @@ const guideText = [
 
 const OnboardingPage = () => {
   const [page, setPage] = useState(0);
-  const { onPress } = useLinkProps({ to: { screen: 'Home' } });
+  const linkTo = useLinkTo();
+  const navigateToHome = () => linkTo('Home');
 
   const pageScrollHandler = (e: PagerViewOnPageSelectedEvent) => {
     const { position } = e.nativeEvent;
@@ -67,7 +68,7 @@ const OnboardingPage = () => {
           ))}
         </View>
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'flex-end' }}>
-          <Pressable onPress={onPress} style={{ marginRight: 32, marginBottom: 52 }}>
+          <Pressable onPress={navigateToHome} style={{ marginRight: 32, marginBottom: 52 }}>
             <Text style={styles.passText}>건너뛰기</Text>
           </Pressable>
         </View>

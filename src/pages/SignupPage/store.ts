@@ -6,7 +6,7 @@ import { images } from '@/assets/images/profiles';
 interface State {
   id: number;
   name: string;
-  image: unknown;
+  image: string;
   photo: string | null;
   step: number;
   isLoading: boolean;

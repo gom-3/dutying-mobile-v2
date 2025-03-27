@@ -7,7 +7,6 @@ import {
 } from 'react-native-gesture-handler';
 import { shallow } from 'zustand/shallow';
 import { getAccountShiftList } from '@/api/shift';
-import useWidget from '@/hooks/useWidget';
 import { useAccountStore } from '@/stores/account';
 import { useCaledarDateStore } from '@/stores/calendar';
 import { useShiftTypeStore } from '@/stores/shift';
@@ -105,7 +104,8 @@ const useCalendar = (isRender?: boolean) => {
     }
   };
 
-  useWidget({ shiftTypes });
+  // @TODO 임시 비활성화
+  // useWidget({ shiftTypes });
 
   return {
     state: { weeks, shiftTypes, date, today },

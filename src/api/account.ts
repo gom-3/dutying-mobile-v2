@@ -3,6 +3,7 @@ import CookieManager from '@react-native-cookies/cookies';
 import axios from 'axios';
 import { useAccountStore } from '@/stores/account';
 import { type Account } from '@/types/account';
+import { type Ward } from '@/types/ward';
 import axiosInstance, { API_URL, type AccessToken } from './client';
 
 export type OAuthResponseDTO = Pick<Account, 'accountId' | 'email' | 'name' | 'status'> &

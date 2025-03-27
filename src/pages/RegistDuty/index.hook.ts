@@ -1,4 +1,4 @@
-import { useLinkProps, useNavigation } from '@react-navigation/native';
+import { useLinkTo, useNavigation } from '@react-navigation/native';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useMemo, useState } from 'react';
 import {
@@ -29,8 +29,11 @@ const useRegistDuty = () => {
   const [setOnboardingState] = useOnboardingStore((state) => [state.setState]);
   const [tempCalendar, setTempCalendar] = useState<DateType[]>(calendar);
   const [editShift] = useEditShiftTypeStore((state) => [state.editShift]);
-  const { onPress: navigateToEidtShiftType } = useLinkProps({ to: { screen: 'ShiftTypeEdit' } });
-  const { onPress: navigateToShiftType } = useLinkProps({ to: { screen: 'ShiftType' } });
+
+  const linkTo = useLinkTo();
+  const navigateToEidtShiftType = () => linkTo('ShiftTypeEdit');
+  const navigateToShiftType = () => linkTo('ShiftType');
+
   const year = date.getFullYear();
   const month = date.getMonth();
   const [index, setIndex] = useState(date.getDate() + new Date(year, month, 1).getDay() - 1);

@@ -1,4 +1,4 @@
-import { useLinkProps } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import { eidtAccountStatus, getAccountMeWaiting } from '@/api/account';
 import { deleteWatingNurses } from '@/api/ward';
@@ -14,11 +14,11 @@ const useEnterWardPending = () => {
     enabled: account?.status === 'WARD_ENTRY_PENDING',
   });
 
-  const { onPress: navigateToEnterWard } = useLinkProps({ to: { screen: 'EnterWard' } });
+  const linkTo = useLinkTo();
 
   const pressEnterWard = () => {
     firebaseLogEvent('enter_ward_start');
-    navigateToEnterWard();
+    linkTo('EnterWard');
   };
 
   const cancelWaiting = async (wardId: number, nurseId: number) => {

@@ -3,7 +3,7 @@ import {
   type BottomSheetBackdropProps,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
-import { useLinkProps } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { Pressable, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -40,7 +40,8 @@ const NoFriendToday = () => {
 };
 
 const NoFriendList = () => {
-  const { onPress: navigateToRegistFriend } = useLinkProps({ to: { screen: 'RequestFriend' } });
+  const linkTo = useLinkTo();
+  const navigateToRegistFriend = () => linkTo('RequestFriend');
   return (
     <View style={{ alignItems: 'center', padding: 20 }}>
       <UglyCircleIcon />

@@ -234,7 +234,9 @@ function EnterWardPendingPage() {
               </Pressable>
               <Pressable
                 onPress={() => {
-                  accountWaitingWard && cancelWaiting(accountWaitingWard.wardId, account.nurseId);
+                  if (accountWaitingWard) {
+                    cancelWaiting(accountWaitingWard.wardId, account.nurseId);
+                  }
                   setOpen(false);
                 }}
                 style={{

@@ -15,7 +15,7 @@ interface State {
   alarms: Alarm[];
   alarmText: string;
   isRecurrenceUsing: boolean;
-  recurrenceRule: RecurrenceRule | undefined;
+  recurrenceRule: RecurrenceRule | null;
   recurrenceRuleText: string;
   startDate: Date;
   endDate: Date;
@@ -40,7 +40,7 @@ const initialState: State = {
   alarms: [],
   alarmText: '정각',
   isRecurrenceUsing: false,
-  recurrenceRule: undefined,
+  recurrenceRule: null,
   recurrenceRuleText: '매주',
   startDate: new Date(),
   endDate: new Date(),
@@ -77,7 +77,7 @@ export const useScheduleStore = createWithEqualityFn<Store>()(
         if (schedule.recurrenceRule) {
           const recurrenceRuleList = getRecurrenceRuleList(startDate);
           const found = recurrenceRuleList.find(
-            (item) => item.frequency === schedule.recurrenceRule.frequency,
+            (item) => item.frequency === schedule.recurrenceRule?.frequency,
           );
           if (found) recurrenceRuleText = found.text;
         }

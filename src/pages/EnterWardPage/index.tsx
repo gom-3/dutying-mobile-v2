@@ -1,6 +1,7 @@
 import LottieView from 'lottie-react-native';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import signupAnimation from '@/assets/animations/signup-animation.json';
 import BackArrowIcon from '@/assets/svgs/back-arrow.svg';
 import PageViewContainer from '@/components/PageView';
 import { hexToRgba } from '@/utils/color';
@@ -51,12 +52,7 @@ const EnterWardPage = () => {
             top: 0,
           }}
         >
-          <LottieView
-            style={{ width: 200, height: 200 }}
-            source={require('@/assets/animations/signup-animation.json')}
-            autoPlay
-            loop
-          />
+          <LottieView style={{ width: 200, height: 200 }} source={signupAnimation} autoPlay loop />
         </View>
       )}
     </PageViewContainer>

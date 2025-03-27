@@ -16,6 +16,7 @@ import { useAppState } from '@/hooks/useAppState';
 import Router from '@/pages/Router';
 import { useAccountStore } from '@/stores/account';
 import { COLOR } from '@/styles';
+import axiosInstance from './api/client';
 
 Sentry.init({
   dsn: 'https://93ddd999daaaa867ad39989278a40c0b@o4505477969084416.ingest.sentry.io/4506099006898176',

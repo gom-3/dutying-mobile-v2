@@ -1,4 +1,4 @@
-import { useLinkProps } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import { useState } from 'react';
 import { eidtAccountStatus } from '@/api/account';
 import { createAccountNurse } from '@/api/nurse';
@@ -20,7 +20,8 @@ const useEnterWard = () => {
   const [ward, setWard] = useState<Ward | null>(null);
   const [error, setError] = useState<boolean>(false);
 
-  const { onPress: navigateToWard } = useLinkProps({ to: { screen: 'Ward' } });
+  const linkTo = useLinkTo();
+  const navigateToWard = () => linkTo('Ward');
 
   const enterWard = async (wardId: number) => {
     setState('isLoading', true);
@@ -53,7 +54,7 @@ const useEnterWard = () => {
       const ward = await getWardByCode(code);
       setWard(ward);
       setError(false);
-    } catch (error) {
+    } catch {
       setError(true);
       setWard(null);
     }

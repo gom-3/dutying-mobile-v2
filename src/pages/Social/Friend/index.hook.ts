@@ -1,4 +1,4 @@
-import { useLinkProps } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useMemo, useState } from 'react';
 import { getAccount } from '@/api/account';
@@ -11,8 +11,9 @@ import { useFriendStore } from './store';
 
 const useFriendPage = () => {
   const [account, setAccountState] = useAccountStore((state) => [state.account, state.setState]);
-  const { onPress: navigateMoimPage } = useLinkProps({ to: { screen: 'Moim' } });
-  const { onPress: navigateRequestPage } = useLinkProps({ to: { screen: 'RequestFriend' } });
+  const linkTo = useLinkTo();
+  const navigateMoimPage = () => linkTo('Moim');
+  const navigateRequestPage = () => linkTo('RequestFriend');
   const [date, setState] = useCaledarDateStore((state) => [state.date, state.setState]);
   const [weeks, initCalendar] = useFriendStore((state) => [state.weeks, state.initCalendar]);
   const [isBottomSheetOpen, setFriendState] = useFriendStore((state) => [

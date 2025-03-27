@@ -1,4 +1,4 @@
-import { useLinkProps } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { useCaledarDateStore } from '@/stores/calendar';
 import { useShiftTypeStore } from '@/stores/shift';
@@ -8,11 +8,11 @@ const useCalendarHeader = () => {
   const [calendar, setState] = useCaledarDateStore((state) => [state.calendar, state.setState]);
   const [shiftTypes] = useShiftTypeStore((state) => [state.shiftTypes]);
   const [shiftTypesCount, setShiftTypesCount] = useState(new Map<number, number>());
-  const { onPress } = useLinkProps({ to: { screen: 'Notification' } });
 
+  const linkTo = useLinkTo();
   const navigateToNotification = () => {
     firebaseLogEvent('move_notification');
-    onPress();
+    linkTo('Notification');
   };
 
   const openSideMenu = () => {

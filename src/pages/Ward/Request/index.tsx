@@ -1,5 +1,5 @@
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { useLinkProps } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { TouchableOpacity, View, Text, StyleSheet, ScrollView, Image } from 'react-native';
@@ -52,9 +52,8 @@ export const getDayRequestShiftLists = (
 const RequestWardShiftPage = () => {
   const [date, setState] = useCaledarDateStore((state) => [state.date, state.setState]);
   const [account] = useAccountStore((state) => [state.account]);
-  const { onPress: navigateToRequestConfirm } = useLinkProps({
-    to: { screen: 'RequestWardShiftConfirm' },
-  });
+  const linkTo = useLinkTo();
+  const navigateToRequestConfirm = () => linkTo('RequestWardShiftConfirm');
   const year = date.getFullYear();
   const month = date.getMonth();
   const weeks = useMemo(() => {

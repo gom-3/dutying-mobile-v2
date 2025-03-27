@@ -2,9 +2,7 @@ import React from 'react';
 import { StyleSheet, TextInput, type TextInputProps } from 'react-native';
 import { COLOR } from '@/styles';
 
-interface Props extends TextInputProps {}
-
-const TextInputBox: React.FC<Props> = (props) => {
+const TextInputBox: React.FC<TextInputProps> = (props) => {
   return <TextInput {...props} style={[styles.input, props.style]} />;
 };
 

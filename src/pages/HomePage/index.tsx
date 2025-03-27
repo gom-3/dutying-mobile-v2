@@ -1,5 +1,5 @@
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { useLinkProps } from '@react-navigation/native';
+import { useLinkTo } from '@react-navigation/native';
 import * as NavigationBarAndroid from 'expo-navigation-bar';
 import { useEffect } from 'react';
 import { View, Text, Image, Platform } from 'react-native';
@@ -26,13 +26,14 @@ const HomePage = () => {
   ]);
   const { regist, setState } = useOnboardingStore();
 
-  const { onPress: navigateToRegistDuty } = useLinkProps({ to: { screen: 'RegistDuty' } });
+  const linkTo = useLinkTo();
+
   const closeRegistPopup = () => {
     setState('regist', true);
   };
   const acceptRegistPopup = () => {
     setState('regist', true);
-    navigateToRegistDuty();
+    linkTo('RegistDuty');
   };
 
   useEffect(() => {

@@ -14,7 +14,8 @@ const useCategory = () => {
 
   const [calendarId, setState] = useScheduleStore((state) => [state.calendarId, state.setState]);
   const { onPress: navigateEditDeviceCalendar } = useLinkProps({
-    to: { screen: 'DeviceCalendar', params: { isRedirected: true } },
+    screen: 'DeviceCalendar',
+    params: { isRedirected: true },
   });
 
   const filteredDeviceCalendar = useMemo(

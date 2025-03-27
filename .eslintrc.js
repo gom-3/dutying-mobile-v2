@@ -13,6 +13,7 @@ module.exports = {
   ignorePatterns: ['/*', '!/src', '!/app', '/src/plugin'],
   plugins: ['@typescript-eslint', 'react', 'react-native', 'react-hooks', 'import'],
   rules: {
+    '@typescript-eslint/no-require-imports': 'off',
     'react-native/sort-styles': 'off',
     'import/no-named-as-default-member': 'off',
     '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'inline-type-imports' }],

@@ -1,5 +1,6 @@
 import { type Account } from '@/types/account';
 import { type Shift } from '@/types/shift';
+import { type Ward } from '@/types/ward';
 import axiosInstance from './client';
 
 export const getWardByCode = async (code: string) =>

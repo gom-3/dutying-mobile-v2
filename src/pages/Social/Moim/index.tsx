@@ -18,6 +18,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import signupAnimation from '@/assets/animations/signup-animation.json';
 import CheckIcon from '@/assets/svgs/check.svg';
 import EnterIcon from '@/assets/svgs/enter.svg';
 import PlusIcon from '@/assets/svgs/plus-circle.svg';
@@ -216,12 +217,7 @@ const MoimPage = () => {
             zIndex: 100,
           }}
         >
-          <LottieView
-            style={{ width: 200, height: 200 }}
-            source={require('@/assets/animations/signup-animation.json')}
-            autoPlay
-            loop
-          />
+          <LottieView style={{ width: 200, height: 200 }} source={signupAnimation} autoPlay loop />
         </View>
       )}
     </PageViewContainer>

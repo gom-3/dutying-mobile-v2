@@ -1,4 +1,4 @@
-import { useLinkProps } from '@react-navigation/native';
+import { useLinkProps, useLinkTo } from '@react-navigation/native';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useEffect, useMemo, useRef } from 'react';
 import { Alert, BackHandler, Platform } from 'react-native';
@@ -22,12 +22,14 @@ const useScheduleCard = (isCardOpen: boolean) => {
     state.calendars,
     state.calendarLink,
   ]);
-  const { onPress: onPressAddScheduleButton } = useLinkProps({ to: { screen: 'RegistSchedule' } });
+  const linkTo = useLinkTo();
   const { onPress: onPressEditScheduleButton } = useLinkProps({
-    to: { screen: 'RegistSchedule', params: { isEdit: true } },
+    screen: 'RegistSchedule',
+    params: { isEdit: true },
   });
   const { onPress: onPressRegistShiftButton } = useLinkProps({
-    to: { screen: 'RegistDuty', params: { dateFrom: date.toISOString() } },
+    screen: 'RegistDuty',
+    params: { dateFrom: date.toISOString() },
   });
   const carouselRef = useRef<ICarouselInstance>(null);
   const year = date.getFullYear();
@@ -57,7 +59,7 @@ const useScheduleCard = (isCardOpen: boolean) => {
       Alert.alert('기기에 수정 가능한 캘린더가 없습니다.');
     } else {
       initStateCreate(date);
-      onPressAddScheduleButton();
+      linkTo('RegistSchedule');
     }
   };
 

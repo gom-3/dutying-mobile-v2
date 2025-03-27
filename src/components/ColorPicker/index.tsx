@@ -8,9 +8,9 @@ import { Keyboard, Pressable, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ColorPickers, {
   Panel1,
-  type returnedResults,
   HueCircular,
   PreviewText,
+  type ColorFormatsObject,
 } from 'reanimated-color-picker';
 import CheckIcon from '@/assets/svgs/check.svg';
 import PlusIcon from '@/assets/svgs/plus-gray.svg';
@@ -30,7 +30,7 @@ const ColorPicker = ({ color, onChange }: Props) => {
     [],
   );
 
-  const onSelectColor = (color: returnedResults) => {
+  const onSelectColor = (color: ColorFormatsObject) => {
     onChange(color.hex);
   };
 

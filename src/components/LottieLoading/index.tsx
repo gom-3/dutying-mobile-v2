@@ -1,5 +1,6 @@
 import LottieView from 'lottie-react-native';
 import { View } from 'react-native';
+import signupAnimation from '@/assets/animations/signup-animation.json';
 import { hexToRgba } from '@/utils/color';
 import { screenHeight, screenWidth } from '@/styles';
 
@@ -17,12 +18,7 @@ const LottieLoading = () => {
         top: 0,
       }}
     >
-      <LottieView
-        style={{ width: 200, height: 200 }}
-        source={require('@/assets/animations/signup-animation.json')}
-        autoPlay
-        loop
-      />
+      <LottieView style={{ width: 200, height: 200 }} source={signupAnimation} autoPlay loop />
     </View>
   );
 };
