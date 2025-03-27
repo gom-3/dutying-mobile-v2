@@ -3,7 +3,6 @@ import {
   type BottomSheetBackdropProps,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
-import { useLinkTo } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { Pressable, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -18,6 +17,7 @@ import { AlertModalInvite } from '@/components/AlertModal';
 import LottieLoading from '@/components/LottieLoading';
 import NavigationBar from '@/components/NavigationBar';
 import PageViewContainer from '@/components/PageView';
+import { navigate } from '@/utils/navigate';
 import { COLOR } from '@/styles';
 import CollectionContoller from './components/CollectionController';
 import CollectionTable from './components/CollectionTable';
@@ -40,8 +40,7 @@ const NoFriendToday = () => {
 };
 
 const NoFriendList = () => {
-  const linkTo = useLinkTo();
-  const navigateToRegistFriend = () => linkTo('RequestFriend');
+  const navigateToRegistFriend = () => navigate('RequestFriend');
   return (
     <View style={{ alignItems: 'center', padding: 20 }}>
       <UglyCircleIcon />

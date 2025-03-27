@@ -1,4 +1,4 @@
-import { useLinkTo, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useMemo, useState } from 'react';
 import {
@@ -16,6 +16,7 @@ import { useShiftTypeStore } from '@/stores/shift';
 import { type Shift } from '@/types/shift';
 import { isSameDate } from '@/utils/date';
 import { firebaseLogEvent } from '@/utils/event';
+import { navigate } from '@/utils/navigate';
 
 const useRegistDuty = () => {
   const [date, calendar, setState] = useCaledarDateStore((state) => [
@@ -30,9 +31,8 @@ const useRegistDuty = () => {
   const [tempCalendar, setTempCalendar] = useState<DateType[]>(calendar);
   const [editShift] = useEditShiftTypeStore((state) => [state.editShift]);
 
-  const linkTo = useLinkTo();
-  const navigateToEidtShiftType = () => linkTo('ShiftTypeEdit');
-  const navigateToShiftType = () => linkTo('ShiftType');
+  const navigateToEidtShiftType = () => navigate('ShiftTypeEdit');
+  const navigateToShiftType = () => navigate('ShiftType');
 
   const year = date.getFullYear();
   const month = date.getMonth();

@@ -1,4 +1,3 @@
-import { useLinkTo } from '@react-navigation/native';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useMemo, useState } from 'react';
 import { getAccount } from '@/api/account';
@@ -7,13 +6,13 @@ import { useAccountStore } from '@/stores/account';
 import { useCaledarDateStore } from '@/stores/calendar';
 import { getCurrentWeekIndex } from '@/utils/date';
 import { firebaseLogEvent } from '@/utils/event';
+import { navigate } from '@/utils/navigate';
 import { useFriendStore } from './store';
 
 const useFriendPage = () => {
   const [account, setAccountState] = useAccountStore((state) => [state.account, state.setState]);
-  const linkTo = useLinkTo();
-  const navigateMoimPage = () => linkTo('Moim');
-  const navigateRequestPage = () => linkTo('RequestFriend');
+  const navigateMoimPage = () => navigate('Moim');
+  const navigateRequestPage = () => navigate('RequestFriend');
   const [date, setState] = useCaledarDateStore((state) => [state.date, state.setState]);
   const [weeks, initCalendar] = useFriendStore((state) => [state.weeks, state.initCalendar]);
   const [isBottomSheetOpen, setFriendState] = useFriendStore((state) => [

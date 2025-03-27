@@ -1,5 +1,5 @@
-import { useLinkTo } from '@react-navigation/native';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { navigate } from '@/utils/navigate';
 import { COLOR } from '@/styles';
 
 interface Props {
@@ -7,9 +7,8 @@ interface Props {
 }
 
 const WardHeader = ({ tab }: Props) => {
-  const linkTo = useLinkTo();
-  const navigateToCalendar = () => linkTo('Ward');
-  const navigateToRequestShift = () => linkTo('RequestWardShift');
+  const navigateToCalendar = () => navigate('Ward');
+  const navigateToRequestShift = () => navigate('RequestWardShift');
 
   return (
     <View

@@ -20,9 +20,17 @@ export const oAuthLogin = async (idToken: string, provider: string, deviceToken:
   ).data;
   useAccountStore.getState().setState('accessToken', data.accessToken);
   axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
-  const { refreshToken } = await CookieManager.get(API_URL);
-  AsyncStorage.setItem('refresh', refreshToken.value);
-  AsyncStorage.setItem('refreshExpires', refreshToken.expires || '');
+
+  try {
+    const { refreshToken } = await CookieManager.get(API_URL);
+    AsyncStorage.setItem('refresh', refreshToken.value);
+    AsyncStorage.setItem('refreshExpires', refreshToken.expires || '');
+  } catch (error) {
+    console.warn('CookieManager failed, using direct AsyncStorage instead:', error);
+    // 쿠키 접근 실패 시 기본값 저장 또는 다른 방법으로 처리
+    // 백엔드에서 응답 헤더에 refreshToken 정보가 있다면 그것을 사용할 수 있습니다
+    AsyncStorage.setItem('cookieManagerFailed', 'true');
+  }
   return data;
 };
 

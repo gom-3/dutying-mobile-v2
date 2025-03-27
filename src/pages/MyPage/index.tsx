@@ -1,4 +1,3 @@
-import { useLinkTo } from '@react-navigation/native';
 import { useMutation } from '@tanstack/react-query';
 import * as Linking from 'expo-linking';
 import LottieView from 'lottie-react-native';
@@ -22,7 +21,7 @@ import { useCaledarDateStore } from '@/stores/calendar';
 import { useOnboardingStore } from '@/stores/onboarding';
 import { hexToRgba } from '@/utils/color';
 import { pickImageFromLibrary } from '@/utils/imagePicker';
-import { navigateToLoginAndResetHistory } from '@/utils/navigate';
+import { navigate, navigateToLoginAndResetHistory } from '@/utils/navigate';
 import { COLOR, screenHeight, screenWidth } from '@/styles';
 
 const MyPage = () => {
@@ -38,8 +37,6 @@ const MyPage = () => {
   const [name, setName] = useState(account.name);
   const [profile, setProfile] = useState(account.profileImgBase64);
   const textRef = useRef<TextInput>(null);
-
-  const linkTo = useLinkTo();
 
   const { mutate: editProfileMutate, isPending: changeProfileLoading } = useMutation({
     mutationFn: (image: string) => editProfile(name, image, account.accountId),
@@ -91,7 +88,7 @@ const MyPage = () => {
   const { mutate: quitWardMutate, isPending } = useMutation({
     mutationFn: ({ wardId }: { wardId: number }) => quitWard(wardId),
     onSuccess: () => {
-      linkTo('Ward');
+      navigate('Ward');
     },
   });
 

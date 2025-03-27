@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { type KakaoOAuthToken, login } from '@react-native-seoul/kakao-login';
-import { useLinkTo } from '@react-navigation/native';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as NavigationBar from 'expo-navigation-bar';
@@ -25,10 +24,10 @@ import PageViewContainer from '@/components/PageView';
 import { useSignupStore } from '@/pages/SignupPage/store';
 import { useAccountStore } from '@/stores/account';
 import { firebaseLogEvent } from '@/utils/event';
+import { navigate } from '@/utils/navigate';
 
 const LoginPage = () => {
-  const linkTo = useLinkTo();
-  const navigateTerm = () => linkTo('Term');
+  const navigateTerm = () => navigate('Term');
 
   const { deviceToken, setState } = useAccountStore();
   const [setSignupState] = useSignupStore((state) => [state.setState]);
@@ -55,7 +54,7 @@ const LoginPage = () => {
           }
         });
       } else {
-        linkTo('Signup');
+        navigate('Signup');
         demoLoginMutate(undefined);
       }
     }
@@ -73,7 +72,7 @@ const LoginPage = () => {
       console.log(data);
       if (data.status === 'INITIAL' || data.name === null) {
         setSignupState('id', data.accountId);
-        linkTo('Signup');
+        navigate('Signup');
       } else {
         setAccountId(1);
         queryClient.invalidateQueries({ queryKey: ['getAccount', 1] });
@@ -84,7 +83,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (accountData) {
       setState('account', accountData);
-      linkTo('Home');
+      navigate('Home');
     }
   }, [accountData]);
 

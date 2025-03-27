@@ -1,10 +1,10 @@
-import { useLinkTo } from '@react-navigation/native';
 import { useState } from 'react';
 import { Text, Image, StyleSheet, View, Pressable } from 'react-native';
 import PagerView, { type PagerViewOnPageSelectedEvent } from 'react-native-pager-view';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '@/assets/images/onboarding';
 import PageViewContainer from '@/components/PageView';
+import { navigate } from '@/utils/navigate';
 import { COLOR, screenWidth } from '@/styles';
 
 const guideText = [
@@ -22,8 +22,7 @@ const guideText = [
 
 const OnboardingPage = () => {
   const [page, setPage] = useState(0);
-  const linkTo = useLinkTo();
-  const navigateToHome = () => linkTo('Home');
+  const navigateToHome = () => navigate('Home');
 
   const pageScrollHandler = (e: PagerViewOnPageSelectedEvent) => {
     const { position } = e.nativeEvent;

@@ -1,4 +1,3 @@
-import { useLinkTo } from '@react-navigation/native';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Alert } from 'react-native';
@@ -8,6 +7,7 @@ import { useSignupStore } from '@/pages/SignupPage/store';
 import { useAccountStore } from '@/stores/account';
 import { firebaseLogEvent } from '@/utils/event';
 import { pickImageFromLibrary } from '@/utils/imagePicker';
+import { navigate } from '@/utils/navigate';
 
 const useProfile = () => {
   const [id, name, image, photo, isLoading, setState] = useSignupStore((state) => [
@@ -23,15 +23,13 @@ const useProfile = () => {
   const [randomPressed, setRandomPressed] = useState(false);
   const [photoPressed, setPhotoPressed] = useState(false);
 
-  const linkTo = useLinkTo();
-
   const { mutate: signupMutate } = useMutation({
     mutationFn: ({ accountId, name, profileImgBase64 }: SignupRequestDTO) =>
       initAccount(accountId, name, profileImgBase64),
     onSuccess: (data) => {
       setAccountState('account', data);
       setState('isLoading', false);
-      linkTo('Onboarding');
+      navigate('Onboarding');
     },
     onError: () => {
       setState('isLoading', false);

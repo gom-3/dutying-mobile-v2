@@ -7,7 +7,7 @@ import * as NavigationBar from 'expo-navigation-bar';
 import * as Notifications from 'expo-notifications';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Alert, type AppStateStatus, Platform } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { EventProvider } from 'react-native-outside-press';
@@ -16,7 +16,8 @@ import { useAppState } from '@/hooks/useAppState';
 import Router from '@/pages/Router';
 import { useAccountStore } from '@/stores/account';
 import { COLOR } from '@/styles';
-import axiosInstance from './api/client';
+import axiosInstance from './src/api/client';
+import { useFonts } from 'expo-font';
 
 Sentry.init({
   dsn: 'https://93ddd999daaaa867ad39989278a40c0b@o4505477969084416.ingest.sentry.io/4506099006898176',
@@ -103,6 +104,30 @@ export default function App() {
   }, []);
 
   useAppState(onAppStateChange);
+
+  const [fontsLoaded, Error] = useFonts({
+    Apple: require('./src/assets/fonts/AppleSDGothicNeoR.ttf'),
+    Apple500: require('./src/assets/fonts/AppleSDGothicNeoM.ttf'),
+    Apple600: require('./src/assets/fonts/AppleSDGothicNeoB.ttf'),
+    Poppins: require('./src/assets/fonts/Poppins-Regular.ttf'),
+    Poppins500: require('./src/assets/fonts/Poppins-Medium.ttf'),
+    Poppins600: require('./src/assets/fonts/Poppins-Bold.ttf'),
+    Line300: require('./src/assets/fonts/LINESeedKR-Th.ttf'),
+    Line: require('./src/assets/fonts/LINESeedKR-Rg.ttf'),
+    Line500: require('./src/assets/fonts/LINESeedKR-Bd.ttf'),
+  });
+
+  const prepare = useCallback(async () => {
+    if (fontsLoaded || Error) await SplashScreen.hideAsync();
+  }, [fontsLoaded]);
+
+  useEffect(() => {
+    prepare();
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <QueryClientProvider client={queryClient}>

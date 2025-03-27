@@ -1,4 +1,3 @@
-import { useLinkTo } from '@react-navigation/native';
 import { useState } from 'react';
 import { Text, Image, StyleSheet, View, Pressable } from 'react-native';
 import PagerView, { type PagerViewOnPageSelectedEvent } from 'react-native-pager-view';
@@ -7,6 +6,7 @@ import { images } from '@/assets/images/ward/onboarding/index';
 import WardIcon from '@/assets/svgs/ward-selected.svg';
 import PageViewContainer from '@/components/PageView';
 import { useOnboardingStore } from '@/stores/onboarding';
+import { navigate } from '@/utils/navigate';
 import { COLOR, screenWidth } from '@/styles';
 
 const guideText = [
@@ -30,11 +30,10 @@ const guideText = [
 const WardOnboardingPage = () => {
   const [page, setPage] = useState(0);
   const [setState] = useOnboardingStore((state) => [state.setState]);
-  const linkTo = useLinkTo();
 
   const endOnboarding = () => {
     setState('ward', true);
-    linkTo('Ward');
+    navigate('Ward');
   };
 
   const pageScrollHandler = (e: PagerViewOnPageSelectedEvent) => {

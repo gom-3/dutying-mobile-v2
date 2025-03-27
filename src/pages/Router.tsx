@@ -38,7 +38,6 @@ const Router = () => {
       },
     },
   };
-
   useShiftType();
 
   return (
@@ -47,7 +46,11 @@ const Router = () => {
         <Stack.Screen name="Login" component={LoginPage} options={{ gestureEnabled: false }} />
         <Stack.Screen name="Term" component={Term} />
         <Stack.Screen name="Signup" component={SignupPage} />
-        <Stack.Screen name="Home" component={HomePage} options={{ gestureEnabled: false }} />
+        <Stack.Screen
+          name="Home"
+          component={HomePage}
+          options={{ animation: 'fade', gestureEnabled: false }}
+        />
         <Stack.Screen name="MyPage" component={MyPage} />
         <Stack.Screen
           name="Friends"

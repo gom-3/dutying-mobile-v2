@@ -1,4 +1,3 @@
-import { useLinkTo } from '@react-navigation/native';
 import * as Clipboard from 'expo-clipboard';
 import * as Linking from 'expo-linking';
 import * as NavigationBar from 'expo-navigation-bar';
@@ -13,6 +12,7 @@ import SliderIcon from '@/assets/svgs/slider.svg';
 import { useAccountStore } from '@/stores/account';
 import { useCaledarDateStore } from '@/stores/calendar';
 import { firebaseLogEvent } from '@/utils/event';
+import { navigate } from '@/utils/navigate';
 
 interface SideMenuItem {
   icon: React.FC<SvgProps>;
@@ -24,8 +24,7 @@ const useSideMenu = () => {
   const { account } = useAccountStore();
   const [setState] = useCaledarDateStore((state) => [state.setState]);
 
-  const linkTo = useLinkTo();
-  const navigateToMyPage = () => linkTo('MyPage');
+  const navigateToMyPage = () => navigate('MyPage');
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -58,7 +57,7 @@ const useSideMenu = () => {
             return;
           }
           firebaseLogEvent('move_regist_duty');
-          linkTo('RegistDuty');
+          navigate('RegistDuty');
         },
       },
       {
@@ -66,7 +65,7 @@ const useSideMenu = () => {
         title: '근무 유형 수정',
         onPress: () => {
           firebaseLogEvent('move_edit_shfit_type');
-          linkTo('ShiftType');
+          navigate('ShiftType');
         },
       },
       {
@@ -74,7 +73,7 @@ const useSideMenu = () => {
         title: '공유하기',
         onPress: () => {
           firebaseLogEvent('move_share');
-          linkTo('Share');
+          navigate('Share');
         },
       },
       {
@@ -82,7 +81,7 @@ const useSideMenu = () => {
         title: '캘린더 관리',
         onPress: () => {
           firebaseLogEvent('move_calendar_link');
-          linkTo('DeviceCalendar');
+          navigate('DeviceCalendar');
         },
       },
       {

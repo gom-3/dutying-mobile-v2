@@ -1,5 +1,4 @@
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { useLinkTo } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { TouchableOpacity, View, Text, StyleSheet, ScrollView, Image } from 'react-native';
@@ -19,6 +18,7 @@ import PageViewContainer from '@/components/PageView';
 import { useAccountStore } from '@/stores/account';
 import { useCaledarDateStore } from '@/stores/calendar';
 import { days, initMonthCalendarDates, isSameDate } from '@/utils/date';
+import { navigate } from '@/utils/navigate';
 import { COLOR } from '@/styles';
 import WardHeader from '../components/WardHeader';
 
@@ -52,8 +52,7 @@ export const getDayRequestShiftLists = (
 const RequestWardShiftPage = () => {
   const [date, setState] = useCaledarDateStore((state) => [state.date, state.setState]);
   const [account] = useAccountStore((state) => [state.account]);
-  const linkTo = useLinkTo();
-  const navigateToRequestConfirm = () => linkTo('RequestWardShiftConfirm');
+  const navigateToRequestConfirm = () => navigate('RequestWardShiftConfirm');
   const year = date.getFullYear();
   const month = date.getMonth();
   const weeks = useMemo(() => {

@@ -1,4 +1,5 @@
-import analytics from '@react-native-firebase/analytics';
+import { getAnalytics, logEvent } from '@react-native-firebase/analytics';
+import { getApp } from '@react-native-firebase/app';
 import { Frequency } from 'expo-calendar';
 import Constants from 'expo-constants';
 import { days } from './date';
@@ -23,6 +24,8 @@ export const getRecurrenceRuleList = (startDate: Date) => [
 
 export const firebaseLogEvent = (name: string) => {
   if (Constants.appOwnership !== 'expo') {
-    analytics().logEvent(name);
+    const app = getApp();
+    const analytics = getAnalytics(app);
+    logEvent(analytics, name);
   }
 };

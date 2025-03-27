@@ -1,4 +1,3 @@
-import { useLinkTo } from '@react-navigation/native';
 import { useState } from 'react';
 import { eidtAccountStatus } from '@/api/account';
 import { createAccountNurse } from '@/api/nurse';
@@ -6,6 +5,7 @@ import { addMeToWatingNurses, getWardByCode } from '@/api/ward';
 import { useEnterWardPageStore } from '@/pages/EnterWardPage/store';
 import { useAccountStore } from '@/stores/account';
 import { type Ward } from '@/types/ward';
+import { navigate } from '@/utils/navigate';
 
 const useEnterWard = () => {
   const [name, phoneNum, gender, isWorker, setState] = useEnterWardPageStore((state) => [
@@ -20,8 +20,7 @@ const useEnterWard = () => {
   const [ward, setWard] = useState<Ward | null>(null);
   const [error, setError] = useState<boolean>(false);
 
-  const linkTo = useLinkTo();
-  const navigateToWard = () => linkTo('Ward');
+  const navigateToWard = () => navigate('Ward');
 
   const enterWard = async (wardId: number) => {
     setState('isLoading', true);

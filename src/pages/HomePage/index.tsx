@@ -1,5 +1,4 @@
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { useLinkTo } from '@react-navigation/native';
 import * as NavigationBarAndroid from 'expo-navigation-bar';
 import { useEffect } from 'react';
 import { View, Text, Image, Platform } from 'react-native';
@@ -12,6 +11,7 @@ import useDeviceCalendar from '@/hooks/useDeviceCalendar';
 import { useAccountStore } from '@/stores/account';
 import { useCaledarDateStore } from '@/stores/calendar';
 import { useOnboardingStore } from '@/stores/onboarding';
+import { navigate } from '@/utils/navigate';
 import { COLOR, screenWidth } from '@/styles';
 import Calendar from './components/Calendar';
 import Header from './components/Header';
@@ -26,14 +26,12 @@ const HomePage = () => {
   ]);
   const { regist, setState } = useOnboardingStore();
 
-  const linkTo = useLinkTo();
-
   const closeRegistPopup = () => {
     setState('regist', true);
   };
   const acceptRegistPopup = () => {
     setState('regist', true);
-    linkTo('RegistDuty');
+    navigate('RegistDuty');
   };
 
   useEffect(() => {

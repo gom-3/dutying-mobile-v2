@@ -1,4 +1,4 @@
-import { useLinkProps, useLinkTo } from '@react-navigation/native';
+import { useLinkProps } from '@react-navigation/native';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useEffect, useMemo, useRef } from 'react';
 import { Alert, BackHandler, Platform } from 'react-native';
@@ -10,6 +10,7 @@ import { useScheduleStore } from '@/stores/schedule';
 import { useShiftTypeStore } from '@/stores/shift';
 import { isSameDate } from '@/utils/date';
 import { firebaseLogEvent } from '@/utils/event';
+import { navigate } from '@/utils/navigate';
 
 const useScheduleCard = (isCardOpen: boolean) => {
   const { date, calendar, cardDefaultIndex, setState } = useCaledarDateStore();
@@ -22,7 +23,6 @@ const useScheduleCard = (isCardOpen: boolean) => {
     state.calendars,
     state.calendarLink,
   ]);
-  const linkTo = useLinkTo();
   const { onPress: onPressEditScheduleButton } = useLinkProps({
     screen: 'RegistSchedule',
     params: { isEdit: true },
@@ -59,7 +59,7 @@ const useScheduleCard = (isCardOpen: boolean) => {
       Alert.alert('기기에 수정 가능한 캘린더가 없습니다.');
     } else {
       initStateCreate(date);
-      linkTo('RegistSchedule');
+      navigate('RegistSchedule');
     }
   };
 

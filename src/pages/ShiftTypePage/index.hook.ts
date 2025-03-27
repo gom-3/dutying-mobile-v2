@@ -1,9 +1,9 @@
-import { useLinkTo } from '@react-navigation/native';
 import { useMemo } from 'react';
 import useShiftType from '@/hooks/useShiftType';
 import { useShiftTypeStore } from '@/stores/shift';
 import { type Shift } from '@/types/shift';
 import { firebaseLogEvent } from '@/utils/event';
+import { navigate } from '@/utils/navigate';
 import { useEditShiftTypeStore } from './store';
 
 const workClassifications = ['DAY', 'EVENING', 'NIGHT', 'OTHER_WORK'];
@@ -12,7 +12,6 @@ const offClassification = ['OFF', 'LEAVE', 'OTHER_LEAVE'];
 const useShiftTypePage = () => {
   const { initShift, editShift } = useEditShiftTypeStore();
   const [shiftTypes] = useShiftTypeStore((state) => [state.shiftTypes]);
-  const linkTo = useLinkTo();
   useShiftType();
   const workShiftTypes = useMemo(
     () =>
@@ -32,7 +31,7 @@ const useShiftTypePage = () => {
   const onPressPlusIcon = () => {
     firebaseLogEvent('move_add_shift_type');
     initShift();
-    linkTo('ShiftTypeEdit');
+    navigate('ShiftTypeEdit');
   };
 
   const onPressEditIcon = (shift: Shift) => {
@@ -40,7 +39,7 @@ const useShiftTypePage = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { accountShiftTypeId, ...shiftWithoutAccountShiftTypeId } = shift;
     editShift(shiftWithoutAccountShiftTypeId, shift.accountShiftTypeId);
-    linkTo('ShiftTypeEdit');
+    navigate('ShiftTypeEdit');
   };
 
   return {
