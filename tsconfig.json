@@ -9,12 +9,16 @@
       "@/*": [
         "*"
       ]
-    }
+    },
+    "skipLibCheck": true
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "metro.config.js",
     "src"
+  ],
+  "exclude": [
+    "plugin/**/*"
   ]
 }
