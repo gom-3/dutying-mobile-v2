@@ -2,7 +2,7 @@ import { type Alarm, type RecurrenceRule } from 'expo-calendar';
 import { devtools } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
-import { type Schedule } from '@/hooks/useDeviceCalendar';
+import { type ISchedule } from '@/hooks/useDeviceCalendar';
 import { alarmList, getRecurrenceRuleList } from '@/utils/event';
 
 interface State {
@@ -26,7 +26,7 @@ interface State {
 interface Store extends State {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setState: (key: keyof State, value: any) => void;
-  initStateEdit: (schedule: Schedule) => void;
+  initStateEdit: (schedule: ISchedule) => void;
   initStateCreate: (date: Date) => void;
 }
 

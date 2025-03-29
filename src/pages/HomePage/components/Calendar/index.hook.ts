@@ -11,7 +11,7 @@ import { useAccountStore } from '@/stores/account';
 import { useCaledarDateStore } from '@/stores/calendar';
 import { useShiftTypeStore } from '@/stores/shift';
 import { firebaseLogEvent } from '@/utils/event';
-import { type DateType } from '.';
+import { type TDateData } from '.';
 
 const useCalendar = (isRender?: boolean) => {
   const [userId] = useAccountStore((state) => [state.account.accountId]);
@@ -44,12 +44,12 @@ const useCalendar = (isRender?: boolean) => {
   const initCalendar = (year: number, month: number) => {
     const first = new Date(year, month, 1);
     const last = new Date(year, month + 1, 0);
-    const calendar: DateType[] = [];
+    const calendar: TDateData[] = [];
     let dateIndex = 0;
     if (true) {
       const shiftList = shiftListResponse?.accountShiftTypeIdList;
       for (let i = first.getDay() - 1; i >= 0; i--) {
-        const date: DateType = {
+        const date: TDateData = {
           date: new Date(year, month, -i),
           shift: shiftList ? shiftList[dateIndex++] : null,
           schedules: [],
@@ -57,7 +57,7 @@ const useCalendar = (isRender?: boolean) => {
         calendar.push(date);
       }
       for (let i = 1; i <= last.getDate(); i++) {
-        const date: DateType = {
+        const date: TDateData = {
           date: new Date(year, month, i),
           shift: shiftList ? shiftList[dateIndex++] : null,
           schedules: [],
@@ -65,7 +65,7 @@ const useCalendar = (isRender?: boolean) => {
         calendar.push(date);
       }
       for (let i = last.getDay(), j = 1; i < 6; i++, j++) {
-        const date: DateType = {
+        const date: TDateData = {
           date: new Date(year, month + 1, j),
           shift: shiftList ? shiftList[dateIndex++] : null,
           schedules: [],
@@ -78,7 +78,7 @@ const useCalendar = (isRender?: boolean) => {
   };
 
   const weeks = useMemo(() => {
-    const weeks: DateType[][] = [];
+    const weeks: TDateData[][] = [];
     if (isRender) {
       const temp = [...calendar];
       while (temp.length > 0) weeks.push(temp.splice(0, 7));

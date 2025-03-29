@@ -2,16 +2,16 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import GrayDotsIcon from '@/assets/svgs/dots-gray.svg';
 import ShiftBadge from '@/components/ShiftBadge';
-import { type Schedule } from '@/hooks/useDeviceCalendar';
+import { type ISchedule } from '@/hooks/useDeviceCalendar';
 import { hexToRgba } from '@/utils/color';
 import { days, isSameDate } from '@/utils/date';
 import { COLOR } from '@/styles';
 import useCalendar from './index.hook';
 
-export type DateType = {
+export type TDateData = {
   date: Date;
   shift: number | null;
-  schedules: Schedule[];
+  schedules: ISchedule[];
 };
 
 interface Props {

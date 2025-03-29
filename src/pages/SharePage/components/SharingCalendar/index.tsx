@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import ShiftBadge from '@/components/ShiftBadge';
-import { type Schedule } from '@/hooks/useDeviceCalendar';
+import { type ISchedule } from '@/hooks/useDeviceCalendar';
 import { days, isSameDate } from '@/utils/date';
 import { COLOR } from '@/styles';
 import useCalendar from '../../../HomePage/components/Calendar/index.hook';
@@ -8,7 +8,7 @@ import useCalendar from '../../../HomePage/components/Calendar/index.hook';
 export type DateType = {
   date: Date;
   shift: number | null;
-  schedules: Schedule[];
+  schedules: ISchedule[];
 };
 
 interface Props {

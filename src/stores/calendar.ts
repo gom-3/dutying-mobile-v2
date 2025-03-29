@@ -1,11 +1,11 @@
 import { devtools } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
-import { type DateType } from '@/pages/HomePage/components/Calendar';
+import { type TDateData } from '@/pages/HomePage/components/Calendar';
 
 interface State {
   date: Date;
-  calendar: DateType[];
+  calendar: TDateData[];
   cardDefaultIndex: number;
   isCardOpen: boolean;
   isSideMenuOpen: boolean;

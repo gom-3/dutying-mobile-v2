@@ -16,7 +16,7 @@ import { useCaledarDateStore } from '@/stores/calendar';
 import { useDeviceCalendarStore } from '@/stores/device';
 import { dateDiffInDays } from '@/utils/date';
 
-export type Schedule = Event & {
+export interface ISchedule extends Event {
   level: number;
   isStart: boolean;
   isEnd: boolean;
@@ -25,7 +25,7 @@ export type Schedule = Event & {
   leftDuration: number;
   color: string;
   editbale: boolean;
-};
+}
 
 const useDeviceCalendar = () => {
   const [date, calendar, isScheduleUpdated, setState] = useCaledarDateStore((state) => [
@@ -41,10 +41,12 @@ const useDeviceCalendar = () => {
       state.isChanged,
       state.setState,
     ]);
-  const [editableCalendar, setEditableCalendar] = useState<Calendar[]>([]);
+
   const [granted, setGranted] = useState(false);
 
   const getEventFromDevice = async () => {
+    if (!granted) return;
+
     const year = date.getFullYear();
     const month = date.getMonth();
     const first = new Date(year, month, 1);
@@ -116,7 +118,7 @@ const useDeviceCalendar = () => {
           level++;
         }
         for (let i = index; i < index + jump; i++) {
-          const schedule: Schedule = {
+          const schedule: ISchedule = {
             ...event,
             startTime: eventStartDate,
             endTime: eventEndDate,
@@ -128,7 +130,7 @@ const useDeviceCalendar = () => {
             isEnd: eventEndDate.getDate() === newCalendar[i].date.getDate(),
             leftDuration: endIndex - i,
             editbale:
-              editableCalendar.find((calendar) => calendar.id === event.calendarId)
+              deviceCalendar.find((calendar) => calendar.id === event.calendarId)
                 ?.allowsModifications || false,
           };
           const schedules = [...newCalendar[i].schedules];
@@ -147,15 +149,7 @@ const useDeviceCalendar = () => {
     if (status === 'granted') {
       setGranted(true);
       let calendars = await getCalendarsAsync(EntityTypes.EVENT);
-      const editableCalendars = calendars.filter(
-        (calendar) => calendar.allowsModifications === true,
-      );
-      setEditableCalendar(editableCalendars);
-      /**
-       * 디바이스에서 캘린더들을 가져와 기존 zustand에 calendarLinks에 등록되지 않은 캘린더면 새로 등록하고 true 값을 넣는다.
-       * 이것은 새로 생긴 캘린더들은 기본적으로 듀팅 캘린더에 연동되는 것을 의미한다. 이미 이전에 정의된 캘린더는 그대로 둔다.
-       * */
-      // const editable = calendars.filter((calendar) => calendar.)
+
       const newMap: { [key: string]: boolean } = { ...calendarLinks };
       calendars.forEach((key) => {
         if (newMap[key.id] === undefined) {
@@ -163,11 +157,6 @@ const useDeviceCalendar = () => {
         }
       });
       setDeivceCalendar('calendarLink', newMap);
-
-      /**
-       * 듀팅- 접두사로 시작하는 캘린더들은 듀팅 캘린더로 구분된다. 디바이스에서 가져온 캘린더들 중에
-       * 만약 듀팅 캘린더가 한개도 없을 시 사전에 정의된 2종류의 듀팅 캘린더가 디바이스에 추가된다.
-       */
 
       let deviceDutyingCalendars = calendars.filter((calendar) =>
         calendar.title.startsWith('듀팅'),
@@ -185,17 +174,18 @@ const useDeviceCalendar = () => {
         calendars = await getCalendarsAsync();
         calendars = calendars.filter((calendar) => calendar.allowsModifications === true);
         deviceDutyingCalendars = calendars.filter((calendar) => calendar.title.startsWith('듀팅'));
-        setDeivceCalendar('dutyingCalendars', deviceDutyingCalendars);
       }
       setDeivceCalendar('dutyingCalendars', deviceDutyingCalendars);
       setDeivceCalendar('calendars', calendars);
+
+      // 권한이 승인된 후 이벤트를 가져옵니다
+      await getEventFromDevice();
     } else {
       Alert.alert(
         '권한 거부됨',
         '캘린더 접근 권한이 거부되었습니다. 설정에서 권한을 허용해 주세요.',
         [
           { text: '취소', style: 'cancel' },
-          // 설정으로 이동하는 버튼
           {
             text: '설정으로 이동',
             onPress: () => {
@@ -220,11 +210,11 @@ const useDeviceCalendar = () => {
   }, [granted, isCalendarChanged]);
 
   useEffect(() => {
-    if (isScheduleUpdated) {
+    if (isScheduleUpdated && granted) {
       getEventFromDevice();
       setState('isScheduleUpdated', false);
     }
-  }, [isScheduleUpdated]);
+  }, [isScheduleUpdated, granted]);
 };
 
 const newCalendars: Partial<Calendar>[] = [

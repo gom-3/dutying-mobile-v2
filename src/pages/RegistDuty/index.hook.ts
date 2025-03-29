@@ -7,7 +7,7 @@ import {
   editAccountShiftList,
   getAccountShiftList,
 } from '@/api/shift';
-import { type DateType } from '@/pages/HomePage/components/Calendar';
+import { type TDateData } from '@/pages/HomePage/components/Calendar';
 import { useEditShiftTypeStore } from '@/pages/ShiftTypePage/store';
 import { useAccountStore } from '@/stores/account';
 import { useCaledarDateStore } from '@/stores/calendar';
@@ -28,7 +28,7 @@ const useRegistDuty = () => {
   const [userId] = useAccountStore((state) => [state.account.accountId]);
   const [shiftTypes] = useShiftTypeStore((state) => [state.shiftTypes]);
   const [setOnboardingState] = useOnboardingStore((state) => [state.setState]);
-  const [tempCalendar, setTempCalendar] = useState<DateType[]>(calendar);
+  const [tempCalendar, setTempCalendar] = useState<TDateData[]>(calendar);
   const [editShift] = useEditShiftTypeStore((state) => [state.editShift]);
 
   const navigateToEidtShiftType = () => navigate('ShiftTypeEdit');
@@ -90,12 +90,12 @@ const useRegistDuty = () => {
   const registCalendar = useMemo(() => {
     const first = new Date(year, month, 1);
     const last = new Date(year, month + 1, 0);
-    const calendar: DateType[] = [];
+    const calendar: TDateData[] = [];
     let dateIndex = 0;
     if (shiftListResponse) {
       const shiftList = shiftListResponse.accountShiftTypeIdList;
       for (let i = first.getDay() - 1; i >= 0; i--) {
-        const date: DateType = {
+        const date: TDateData = {
           date: new Date(year, month, -i),
           shift: shiftList[dateIndex++],
           schedules: [],
@@ -103,7 +103,7 @@ const useRegistDuty = () => {
         calendar.push(date);
       }
       for (let i = 1; i <= last.getDate(); i++) {
-        const date: DateType = {
+        const date: TDateData = {
           date: new Date(year, month, i),
           shift: shiftList[dateIndex++],
           schedules: [],
@@ -111,7 +111,7 @@ const useRegistDuty = () => {
         calendar.push(date);
       }
       for (let i = last.getDay(), j = 1; i < 6; i++, j++) {
-        const date: DateType = {
+        const date: TDateData = {
           date: new Date(year, month + 1, j),
           shift: shiftList[dateIndex++],
           schedules: [],
@@ -144,7 +144,7 @@ const useRegistDuty = () => {
 
   const insertShift = (shift: number) => {
     firebaseLogEvent('insert_shift');
-    const newValue: DateType = {
+    const newValue: TDateData = {
       ...tempCalendar[index],
       shift,
     };
@@ -161,7 +161,7 @@ const useRegistDuty = () => {
 
   const deleteShift = () => {
     firebaseLogEvent('delete_shift');
-    const newValue: DateType = {
+    const newValue: TDateData = {
       ...tempCalendar[index],
       shift: null,
     };

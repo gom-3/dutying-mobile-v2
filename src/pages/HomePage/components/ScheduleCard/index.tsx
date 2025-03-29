@@ -7,7 +7,7 @@ import PencilIcon from '@/assets/svgs/pencil.svg';
 import BackDrop from '@/components/BackDrop';
 import { COLOR, screenHeight, screenWidth } from '@/styles';
 import useScheduleCard from './index.hook';
-import { type DateType } from '../Calendar';
+import { type TDateData } from '../Calendar';
 
 interface Props {
   isCardOpen: boolean;
@@ -26,7 +26,7 @@ const ScheduleCard = ({ isCardOpen }: Props) => {
       changeDate,
     },
   } = useScheduleCard(isCardOpen);
-  const renderItem = ({ item }: { item: DateType }) => {
+  const renderItem = ({ item }: { item: TDateData }) => {
     const shift = shiftTypes.get(item.shift || 0);
     return (
       <View style={styles.cardView}>

@@ -2,7 +2,7 @@ import * as NavigationBar from 'expo-navigation-bar';
 import { useEffect, useMemo, useRef } from 'react';
 import { Alert, BackHandler, Platform } from 'react-native';
 import { type ICarouselInstance } from 'react-native-reanimated-carousel';
-import { type Schedule } from '@/hooks/useDeviceCalendar';
+import { type ISchedule } from '@/hooks/useDeviceCalendar';
 import { useCaledarDateStore } from '@/stores/calendar';
 import { useDeviceCalendarStore } from '@/stores/device';
 import { useScheduleStore } from '@/stores/schedule';
@@ -54,7 +54,7 @@ const useScheduleCard = (isCardOpen: boolean) => {
     }
   };
 
-  const editSchedulePressHandler = (schedule: Schedule) => {
+  const editSchedulePressHandler = (schedule: ISchedule) => {
     if (schedule.editbale) {
       firebaseLogEvent('move_edit_schedule');
       initStateEdit(schedule);
