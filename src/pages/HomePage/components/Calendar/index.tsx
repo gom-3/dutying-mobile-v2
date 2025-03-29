@@ -52,7 +52,6 @@ const Calendar = ({ withoutSchedule }: Props) => {
         {weeks.map((week, i) => (
           <View key={i} style={styles.week}>
             {week.map((day, j) => {
-              // console.log(day);
               return (
                 <TouchableOpacity
                   activeOpacity={0.5}

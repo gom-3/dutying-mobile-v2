@@ -88,7 +88,6 @@ const RequestShift = () => {
   useEffect(() => {
     if (requestShiftList) {
       const my = requestShiftList.find((v) => v.accountId === account.accountId);
-      console.log(my, 123);
       const newMap = new Map(requestArray);
       my?.accountShiftTypes.forEach((shift, i) => {
         if (shift && !shift.isAccepted) {
@@ -97,11 +96,9 @@ const RequestShift = () => {
         }
       });
       setRequestArray(newMap);
-      console.log(newMap);
     }
   }, [requestShiftList]);
 
-  console.log(shiftTypes);
   const weeks = useMemo(() => {
     const first = new Date(year, month, 1);
     const last = new Date(year, month + 1, 0);
@@ -158,7 +155,6 @@ const RequestShift = () => {
     requestArray.forEach((value, key) => {
       array.push({ date: key, accountShiftTypeId: value });
     });
-    console.log(array);
     requestShiftListMutate(array);
   };
 

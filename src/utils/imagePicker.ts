@@ -33,7 +33,6 @@ export const pickImageFromCamera = async (): Promise<string | undefined> => {
     if (result.canceled || !result.assets) {
       throw new Error('no image selected');
     }
-    console.log(result.assets[0].base64?.length);
     return result.assets[0].base64!;
   } catch (error) {
     console.log(error);

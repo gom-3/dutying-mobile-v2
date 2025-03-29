@@ -1,10 +1,10 @@
 import { type BottomSheetModal } from '@gorhom/bottom-sheet';
-import { useLinkProps } from '@react-navigation/native';
 import { type Calendar } from 'expo-calendar';
 import { useEffect, useMemo, useRef } from 'react';
 import { Keyboard } from 'react-native';
 import { useDeviceCalendarStore } from '@/stores/device';
 import { useScheduleStore } from '@/stores/schedule';
+import { navigate } from '@/utils/navigate';
 
 const useCategory = () => {
   const [deviceCalendar, calendarLink] = useDeviceCalendarStore((state) => [
@@ -13,10 +13,10 @@ const useCategory = () => {
   ]);
 
   const [calendarId, setState] = useScheduleStore((state) => [state.calendarId, state.setState]);
-  const { onPress: navigateEditDeviceCalendar } = useLinkProps({
-    screen: 'DeviceCalendar',
-    params: { isRedirected: true },
-  });
+
+  const navigateEditDeviceCalendar = () => {
+    navigate('DeviceCalendar', { isRedirected: true });
+  };
 
   const filteredDeviceCalendar = useMemo(
     () =>

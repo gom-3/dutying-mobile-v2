@@ -62,7 +62,6 @@ const Actions = ({ isActionOpen, moim, close }: Props) => {
     (props: BottomSheetBackdropProps) => <BottomSheetBackdrop {...props} />,
     [],
   );
-  console.log(modal);
   return (
     <View style={styles.container}>
       <AlertModalInvite
