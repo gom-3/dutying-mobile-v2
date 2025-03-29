@@ -13,6 +13,12 @@
       "@react-native-firebase/messaging",
       "expo-apple-authentication",
       [
+        "./app.plugin",
+        {
+          "devTeamId": "Y4HPW9GX7Y"
+        }
+      ],
+      [
         "expo-calendar",
         {
           "calendarPermission": "개인 일정을 앱에서 함께 관리하기 위해 캘린더 권한이 필요합니다.",
@@ -87,26 +93,6 @@
       "package": "com.gom3.dutying",
       "googleServicesFile": "./google-services.json",
       "versionCode": 16
-    },
-    "extra": {
-      "eas": {
-        "projectId": "9f6c848d-2c00-4196-96c6-ad9b8b5fd145",
-        "build": {
-          "experimental": {
-            "ios": {
-              "appExtensions": [
-                {
-                  "targetName": "widget",
-                  "bundleIdentifier": "com.gom3.dutying.widget",
-                  "entitlements": {
-                    "com.apple.security.application-groups": ["group.expo.modules.widgetsync.data"]
-                  }
-                }
-              ]
-            }
-          }
-        }
-      }
     }
   }
 }
