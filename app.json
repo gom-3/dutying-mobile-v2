@@ -3,7 +3,7 @@
     "name": "듀팅",
     "owner": "dutying",
     "slug": "dutying-mobile-v2",
-    "version": "1.1.40",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "light",
@@ -32,7 +32,9 @@
           "android": {
             "compileSdkVersion": 35,
             "targetSdkVersion": 35,
-            "buildToolsVersion": "35.0.0"
+            "buildToolsVersion": "35.0.0",
+            "extraMavenRepos": ["https://devrepo.kakao.com/nexus/content/groups/public/"],
+            "kotlinVersion": "1.9.25"
           },
           "ios": {
             "useFrameworks": "static",
@@ -44,7 +46,8 @@
         "@react-native-seoul/kakao-login",
         {
           "kakaoAppKey": "1bcf231af91f55cd3ca892cce7dce246",
-          "kotlinVersion": "1.9.0"
+          "overrideKakaoSDKVersion": "2.11.2",
+          "kotlinVersion": "1.9.25"
         }
       ],
       "expo-asset",
@@ -76,11 +79,15 @@
       "supportsTablet": false,
       "infoPlist": {
         "NSCalendarsFullAccessUsageDescription": "개인 일정을 앱에서 함께 관리하기 위해 캘린더 권한이 필요합니다.",
-        "NSRemindersFullAccessUsageDescription": "개인 일정을 앱에서 함께 관리하기 위해 캘린더 권한이 필요합니다."
+        "NSRemindersFullAccessUsageDescription": "개인 일정을 앱에서 함께 관리하기 위해 캘린더 권한이 필요합니다.",
+        "ITSAppUsesNonExemptEncryption": false
       },
       "bundleIdentifier": "com.gom3.dutying",
       "entitlements": {
-        "com.apple.security.application-groups": ["group.expo.modules.widgetsync.data"]
+        "com.apple.security.application-groups": [
+          "group.expo.modules.widgetsync.data",
+          "group.expo.modules.widgetsync.data"
+        ]
       },
       "appleTeamId": "Y4HPW9GX7Y"
     },

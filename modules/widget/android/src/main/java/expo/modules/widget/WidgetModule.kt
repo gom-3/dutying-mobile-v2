@@ -11,25 +11,21 @@ import android.content.pm.PackageManager
 
 class WidgetModule : Module() {
   override fun definition() = ModuleDefinition {
-  Name("Widget")
+    Name("Widget")
 
-  Function("reloadAll") {
-    val widgetName = getWidgetName()
-    if (widgetName == null) {
-      throw Exception("Couldn't read widgetName from app.json")
-    }
-    val widgetComponentName = getWidgetComponentName(widgetName)
-    if (widgetComponentName == null) {
-      throw Exception("Couldn't find widgetName component name")
-    }
-    val widgetManager = AppWidgetManager.getInstance(context)
-    val appWidgetIds = widgetManager.getAppWidgetIds(widgetComponentName)
+    Function("reloadAll") {
+      val widgetName = getWidgetName()
+      val widgetComponentName = getWidgetComponentName(widgetName)
+        ?: throw Exception("Couldn't find widget component name")
+      
+      val widgetManager = AppWidgetManager.getInstance(context)
+      val appWidgetIds = widgetManager.getAppWidgetIds(widgetComponentName)
 
-    val updateIntent =
-        Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE, null).setComponent(widgetComponentName)
-    updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds)
+      val updateIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+        .setComponent(widgetComponentName)
+        .putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds)
 
-    context.sendBroadcast(updateIntent)
+      context.sendBroadcast(updateIntent)
     }
     
     Function("setItem") { value: String, key: String, appGroup: String ->
@@ -49,20 +45,19 @@ class WidgetModule : Module() {
   }
 
   private fun getWidgetName(): String {
-    return "Widget"
+    try {
+      val appInfo = context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
+      return appInfo.metaData.getString("WIDGET_NAME") ?: "widget"
+    } catch (e: Exception) {
+      return "widget"
+    }
   }
 
   private fun getWidgetComponentName(widgetName: String): ComponentName? {
     val widgetList = AppWidgetManager.getInstance(context).getInstalledProviders()
-    for (providerInfo in widgetList) {
-      if (providerInfo.provider.getPackageName().equals(context.getPackageName()) &&
-              providerInfo.provider.getShortClassName().endsWith("." + widgetName)
-      ) {
-        return providerInfo.provider
-      }
-    }
-
-    return null
+    return widgetList.find { providerInfo ->
+      providerInfo.provider.packageName == context.packageName &&
+      providerInfo.provider.shortClassName.endsWith(".$widgetName")
+    }?.provider
   }
-
 }

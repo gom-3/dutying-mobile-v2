@@ -10,7 +10,7 @@ import android.graphics.Color;
 /**
  * Implementation of App Widget functionality.
  */
-class Widget : AppWidgetProvider() {
+class widget : AppWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
