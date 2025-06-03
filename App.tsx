@@ -52,24 +52,49 @@ const registerForPushNotificationAsync = async () => {
         lightColor: '#ff231f7c',
       });
     }
+
     // 가지고 있는 권한 가져오기
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
+
     // 권한 없으면 요청해서 가져오기
     if (existingStatus !== 'granted') {
       const { status } = await Notifications.requestPermissionsAsync();
       finalStatus = status;
     }
+
     if (finalStatus !== 'granted') {
       Alert.alert('알림 권한을 가져오는데 실패했습니다.');
+      return; // 권한이 없으면 Firebase 메시징 설정하지 않음
     }
 
-    if (!Messaging().isDeviceRegisteredForRemoteMessages) {
-      await Messaging().registerDeviceForRemoteMessages();
-    }
+    // 권한이 부여된 후에만 Firebase 메시징 설정
+    try {
+      // iOS와 Android 모두에서 필요시 등록
+      if (!Messaging().isDeviceRegisteredForRemoteMessages) {
+        await Messaging().registerDeviceForRemoteMessages();
+      }
 
-    const token = await Messaging().getToken();
-    useAccountStore.getState().setState('deviceToken', token);
+      const token = await Messaging().getToken();
+      useAccountStore.getState().setState('deviceToken', token);
+      console.log('Firebase 메시징 토큰 성공적으로 가져옴:', token);
+    } catch (error) {
+      console.error('Firebase 메시징 토큰 가져오기 실패:', error);
+      // iOS에서 권한 문제로 실패할 수 있으므로 재시도
+      if (Platform.OS === 'ios') {
+        setTimeout(async () => {
+          try {
+            if (!Messaging().isDeviceRegisteredForRemoteMessages) {
+              await Messaging().registerDeviceForRemoteMessages();
+            }
+            const retryToken = await Messaging().getToken();
+            useAccountStore.getState().setState('deviceToken', retryToken);
+          } catch (retryError) {
+            console.error('Firebase 메시징 토큰 재시도 실패:', retryError);
+          }
+        }, 1000);
+      }
+    }
   }
 };
 

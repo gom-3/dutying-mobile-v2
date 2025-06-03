@@ -3,9 +3,9 @@ import CookieManager from '@react-native-cookies/cookies';
 import axios, { type AxiosError } from 'axios';
 import Toast from 'react-native-toast-message';
 import { useAccountStore } from '@/stores/account';
-import { navigate, navigateToLoginAndResetHistory } from '@/utils/navigate';
+import { navigateToLoginAndResetHistory } from '@/utils/navigate';
 
-export const API_URL = 'https://dev.api.dutying.net';
+export const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
@@ -17,7 +17,9 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(
   (response) => response,
-  async (error: AxiosError) => {
+  async (error: AxiosError<{ message: string }>) => {
+    console.error('네트워크 오류:', error.request);
+
     if (error.response) {
       if (error.response.status === 401) {
         try {
