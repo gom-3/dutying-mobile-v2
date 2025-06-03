@@ -7,6 +7,7 @@ import {
 import { useCallback, useRef } from 'react';
 import { Keyboard, Pressable, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { runOnJS } from 'react-native-reanimated';
 import ColorPickers, {
   Panel1,
   HueCircular,
@@ -31,9 +32,13 @@ const ColorPicker = ({ color, onChange }: Props) => {
     [],
   );
 
-  const onSelectColor = (color: ColorFormatsObject) => {
-    onChange(color.hex);
-  };
+  const onSelectColor = useCallback(
+    (color: ColorFormatsObject) => {
+      'worklet';
+      runOnJS(onChange)(color.hex);
+    },
+    [onChange],
+  );
 
   return (
     <View>
@@ -73,7 +78,7 @@ const ColorPicker = ({ color, onChange }: Props) => {
               value={color}
               sliderThickness={20}
               thumbSize={24}
-              onChange={onSelectColor}
+              onComplete={onSelectColor}
               boundedThumb
             >
               <HueCircular containerStyle={styles.hueContainer} thumbShape="pill">

@@ -5,7 +5,7 @@ import Toast from 'react-native-toast-message';
 import { useAccountStore } from '@/stores/account';
 import { navigateToLoginAndResetHistory } from '@/utils/navigate';
 
-export const API_URL = process.env.EXPO_PUBLIC_API_URL;
+export const API_URL = 'https://api.dutying.net';
 
 const axiosInstance = axios.create({
   baseURL: API_URL,

@@ -50,6 +50,7 @@
     "expo-sharing": "^13.0.1",
     "expo-splash-screen": "^0.29.22",
     "expo-status-bar": "~2.0.1",
+    "lodash-es": "^4.17.21",
     "lottie-react-native": "7.1.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
@@ -75,6 +76,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@testing-library/react-native": "^13.2.0",
+    "@types/lodash": "^4.17.17",
     "@types/node": "^22.7.4",
     "@types/react": "~18.3.12",
     "eslint": "^8.57.0",
