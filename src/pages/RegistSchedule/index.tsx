@@ -1,4 +1,4 @@
-import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
 import { type RouteProp, useRoute } from '@react-navigation/native';
 import {
   Text,
@@ -115,7 +115,9 @@ const RegistSchedulePage = () => {
               if (index !== 1) closeModal();
             }}
           >
-            <ModalContext closeModal={closeModal} />
+            <BottomSheetView style={{ flex: 1 }}>
+              <ModalContext closeModal={closeModal} />
+            </BottomSheetView>
           </BottomSheetModal>
           {isModalOpen && (
             <Pressable

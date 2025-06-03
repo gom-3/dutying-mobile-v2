@@ -2,6 +2,7 @@ import {
   BottomSheetBackdrop,
   type BottomSheetBackdropProps,
   BottomSheetModal,
+  BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { TouchableOpacity, View, Text, StyleSheet, ScrollView, Image } from 'react-native';
@@ -52,42 +53,44 @@ const FriendsList = ({ friends }: Props) => {
         snapPoints={[300, 550, 700]}
         index={1}
       >
-        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 8 }}>
-          <Text style={{ fontFamily: 'Apple', fontSize: 16, color: COLOR.sub2 }}>친구들</Text>
-        </View>
-        <View style={{ marginLeft: 24, marginTop: 24, marginBottom: 16 }}>
-          <Text style={{ color: COLOR.sub3, fontFamily: 'Apple500', fontSize: 12 }}>
-            총 {friends?.length}명
-          </Text>
-        </View>
-        <ScrollView>
-          {friends?.map((friend) => (
-            <View key={`friends ${friend.accountId}`} style={styles.member}>
-              <View style={styles.memberProfile}>
-                <Image
-                  source={{ uri: `data:image/png;base64,${friend.profileImgBase64}` }}
-                  style={styles.memberProfileImage}
-                />
-                <Text>{friend.name}</Text>
+        <BottomSheetView style={{ flex: 1 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 8 }}>
+            <Text style={{ fontFamily: 'Apple', fontSize: 16, color: COLOR.sub2 }}>친구들</Text>
+          </View>
+          <View style={{ marginLeft: 24, marginTop: 24, marginBottom: 16 }}>
+            <Text style={{ color: COLOR.sub3, fontFamily: 'Apple500', fontSize: 12 }}>
+              총 {friends?.length}명
+            </Text>
+          </View>
+          <ScrollView>
+            {friends?.map((friend) => (
+              <View key={`friends ${friend.accountId}`} style={styles.member}>
+                <View style={styles.memberProfile}>
+                  <Image
+                    source={{ uri: `data:image/png;base64,${friend.profileImgBase64}` }}
+                    style={styles.memberProfileImage}
+                  />
+                  <Text>{friend.name}</Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() => pressDeleteButton(friend)}
+                  style={{
+                    borderColor: COLOR.sub3,
+                    borderRadius: 5,
+                    borderWidth: 1,
+                    paddingHorizontal: 8,
+                    paddingVertical: 4,
+                  }}
+                >
+                  <Text style={{ color: COLOR.sub3, fontFamily: 'Apple500', fontSize: 12 }}>
+                    삭제
+                  </Text>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                onPress={() => pressDeleteButton(friend)}
-                style={{
-                  borderColor: COLOR.sub3,
-                  borderRadius: 5,
-                  borderWidth: 1,
-                  paddingHorizontal: 8,
-                  paddingVertical: 4,
-                }}
-              >
-                <Text style={{ color: COLOR.sub3, fontFamily: 'Apple500', fontSize: 12 }}>
-                  삭제
-                </Text>
-              </TouchableOpacity>
-            </View>
-          ))}
-          <View style={{ height: 100 }} />
-        </ScrollView>
+            ))}
+            <View style={{ height: 100 }} />
+          </ScrollView>
+        </BottomSheetView>
       </BottomSheetModal>
       <TouchableOpacity
         onPress={openFriendsListBottomSheet}

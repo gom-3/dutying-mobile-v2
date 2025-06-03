@@ -4,6 +4,7 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
   BottomSheetTextInput,
+  BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { View, Text, Pressable, StyleSheet, ScrollView } from 'react-native';
@@ -103,58 +104,60 @@ const DeviceCalendarPage = () => {
               if (index !== 1) ref.current?.close();
             }}
           >
-            <BottomSheetHeader
-              title={isEdit ? '편집' : '추가'}
-              titleMargin={isEdit ? 38 : 0}
-              rightItems={
-                <View style={{ flexDirection: 'row' }}>
-                  {isEdit && (
-                    <Pressable style={{ marginRight: 14 }} onPress={deleteCalendar}>
-                      <TrashIcon />
+            <BottomSheetView style={{ flex: 1 }}>
+              <BottomSheetHeader
+                title={isEdit ? '편집' : '추가'}
+                titleMargin={isEdit ? 38 : 0}
+                rightItems={
+                  <View style={{ flexDirection: 'row' }}>
+                    {isEdit && (
+                      <Pressable style={{ marginRight: 14 }} onPress={deleteCalendar}>
+                        <TrashIcon />
+                      </Pressable>
+                    )}
+                    <Pressable onPress={createCalendar}>
+                      <CheckIcon />
                     </Pressable>
-                  )}
-                  <Pressable onPress={createCalendar}>
-                    <CheckIcon />
-                  </Pressable>
-                </View>
-              }
-              onPressExit={() => {}}
-            />
-            <View style={{ padding: 10 }}>
-              <BottomSheetTextInput
-                maxLength={10}
-                onChangeText={(text) => {
-                  textRef.current = text;
-                  setIsValid((prev) => ({ ...prev, name: true }));
-                }}
-                style={[
-                  styles.input,
-                  { borderColor: isValid.name ? COLOR.main4 : COLOR.invalidBorder },
-                ]}
-                placeholder="유형 이름"
-                defaultValue={isEdit ? name : ''}
+                  </View>
+                }
+                onPressExit={() => {}}
               />
-              {isValid.name ? (
-                <Text style={styles.inputGuideText}>캘린더에 표시되는 일정을 분류해보세요.</Text>
-              ) : (
-                <Text style={[styles.inputGuideText, { color: COLOR.invalidText }]}>
-                  올바른 이름이 아닙니다. 다시 한번 확인해주세요.
-                </Text>
-              )}
-              <Text style={styles.modalColorText}>색상</Text>
-              <ColorPicker
-                color={color.length > 0 ? color : 'white'}
-                onChange={(color) => {
-                  setColor(color);
-                  setIsValid((prev) => ({ ...prev, color: true }));
-                }}
-              />
-              {!isValid.color && (
-                <Text style={[styles.inputGuideText, { color: COLOR.invalidText }]}>
-                  색상을 선택해주세요.
-                </Text>
-              )}
-            </View>
+              <View style={{ padding: 10 }}>
+                <BottomSheetTextInput
+                  maxLength={10}
+                  onChangeText={(text) => {
+                    textRef.current = text;
+                    setIsValid((prev) => ({ ...prev, name: true }));
+                  }}
+                  style={[
+                    styles.input,
+                    { borderColor: isValid.name ? COLOR.main4 : COLOR.invalidBorder },
+                  ]}
+                  placeholder="유형 이름"
+                  defaultValue={isEdit ? name : ''}
+                />
+                {isValid.name ? (
+                  <Text style={styles.inputGuideText}>캘린더에 표시되는 일정을 분류해보세요.</Text>
+                ) : (
+                  <Text style={[styles.inputGuideText, { color: COLOR.invalidText }]}>
+                    올바른 이름이 아닙니다. 다시 한번 확인해주세요.
+                  </Text>
+                )}
+                <Text style={styles.modalColorText}>색상</Text>
+                <ColorPicker
+                  color={color.length > 0 ? color : 'white'}
+                  onChange={(color) => {
+                    setColor(color);
+                    setIsValid((prev) => ({ ...prev, color: true }));
+                  }}
+                />
+                {!isValid.color && (
+                  <Text style={[styles.inputGuideText, { color: COLOR.invalidText }]}>
+                    색상을 선택해주세요.
+                  </Text>
+                )}
+              </View>
+            </BottomSheetView>
           </BottomSheetModal>
         </SafeAreaView>
       </BottomSheetModalProvider>

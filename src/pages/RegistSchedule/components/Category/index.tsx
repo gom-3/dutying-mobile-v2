@@ -1,4 +1,4 @@
-import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import PlusIcon from '@/assets/svgs/plus.svg';
@@ -60,47 +60,50 @@ const Category = () => {
         }}
         ref={ref}
       >
-        <BottomSheetHeader
-          rightItems={
-            <TouchableOpacity onPress={navigateEditDeviceCalendar}>
-              <PlusIcon />
-            </TouchableOpacity>
-          }
-          title="유형"
-          onPressExit={() => ref.current?.close()}
-        />
-        <ScrollView>
-          {filteredDeviceCalendar.map((calendar) => (
-            <TouchableOpacity
-              style={styles.item}
-              key={calendar.id}
-              onPress={() => pressCategoryHandler(calendar)}
-            >
-              <View
-                style={[
-                  styles.color,
-                  {
-                    backgroundColor: hexToRgba(calendar.color, 0.3),
-                    borderColor: calendar.color,
-                  },
-                ]}
-              />
-              <Text
-                style={[
-                  styles.itemText,
-                  {
-                    color: selectedCalendar.id === calendar.id ? COLOR.main1 : COLOR.sub2,
-                    fontFamily: selectedCalendar.id === calendar.id ? 'Apple600' : 'Apple',
-                    textDecorationLine: selectedCalendar.id === calendar.id ? 'underline' : 'none',
-                  },
-                ]}
+        <BottomSheetView style={{ flex: 1 }}>
+          <BottomSheetHeader
+            rightItems={
+              <TouchableOpacity onPress={navigateEditDeviceCalendar}>
+                <PlusIcon />
+              </TouchableOpacity>
+            }
+            title="유형"
+            onPressExit={() => ref.current?.close()}
+          />
+          <ScrollView>
+            {filteredDeviceCalendar.map((calendar) => (
+              <TouchableOpacity
+                style={styles.item}
+                key={calendar.id}
+                onPress={() => pressCategoryHandler(calendar)}
               >
-                {calendar.title.startsWith('듀팅-') ? calendar.title.slice(3) : calendar.title}
-              </Text>
-            </TouchableOpacity>
-          ))}
-          <View style={{ height: 50 }} />
-        </ScrollView>
+                <View
+                  style={[
+                    styles.color,
+                    {
+                      backgroundColor: hexToRgba(calendar.color, 0.3),
+                      borderColor: calendar.color,
+                    },
+                  ]}
+                />
+                <Text
+                  style={[
+                    styles.itemText,
+                    {
+                      color: selectedCalendar.id === calendar.id ? COLOR.main1 : COLOR.sub2,
+                      fontFamily: selectedCalendar.id === calendar.id ? 'Apple600' : 'Apple',
+                      textDecorationLine:
+                        selectedCalendar.id === calendar.id ? 'underline' : 'none',
+                    },
+                  ]}
+                >
+                  {calendar.title.startsWith('듀팅-') ? calendar.title.slice(3) : calendar.title}
+                </Text>
+              </TouchableOpacity>
+            ))}
+            <View style={{ height: 50 }} />
+          </ScrollView>
+        </BottomSheetView>
       </BottomSheetModal>
     </View>
   );

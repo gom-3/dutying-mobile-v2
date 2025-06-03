@@ -2,6 +2,7 @@ import {
   BottomSheetBackdrop,
   type BottomSheetBackdropProps,
   BottomSheetModal,
+  BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import { useCallback, useRef } from 'react';
 import { Keyboard, Pressable, StyleSheet, View } from 'react-native';
@@ -58,30 +59,32 @@ const ColorPicker = ({ color, onChange }: Props) => {
         }}
         style={{ padding: 15 }}
       >
-        <BottomSheetHeader
-          onPressExit={() => ref.current?.close()}
-          rightItems={
-            <TouchableOpacity onPress={() => ref.current?.close()}>
-              <CheckIcon />
-            </TouchableOpacity>
-          }
-        />
-        <View style={styles.pickerContainer}>
-          <ColorPickers
-            value={color}
-            sliderThickness={20}
-            thumbSize={24}
-            onChange={onSelectColor}
-            boundedThumb
-          >
-            <HueCircular containerStyle={styles.hueContainer} thumbShape="pill">
-              <Panel1 style={styles.panelStyle} />
-            </HueCircular>
-            <View style={styles.previewTxtContainer}>
-              <PreviewText style={{ color: '#707070' }} colorFormat="hsl" />
-            </View>
-          </ColorPickers>
-        </View>
+        <BottomSheetView style={{ flex: 1 }}>
+          <BottomSheetHeader
+            onPressExit={() => ref.current?.close()}
+            rightItems={
+              <TouchableOpacity onPress={() => ref.current?.close()}>
+                <CheckIcon />
+              </TouchableOpacity>
+            }
+          />
+          <View style={styles.pickerContainer}>
+            <ColorPickers
+              value={color}
+              sliderThickness={20}
+              thumbSize={24}
+              onChange={onSelectColor}
+              boundedThumb
+            >
+              <HueCircular containerStyle={styles.hueContainer} thumbShape="pill">
+                <Panel1 style={styles.panelStyle} />
+              </HueCircular>
+              <View style={styles.previewTxtContainer}>
+                <PreviewText style={{ color: '#707070' }} colorFormat="hsl" />
+              </View>
+            </ColorPickers>
+          </View>
+        </BottomSheetView>
       </BottomSheetModal>
     </View>
   );

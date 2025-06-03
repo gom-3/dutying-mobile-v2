@@ -1,4 +1,4 @@
-import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import DateTimePicker, {
   DateTimePickerAndroid,
   type DateTimePickerEvent,
@@ -70,14 +70,19 @@ const DatePicker = ({ date, mode, text, style, onChange }: Props) => {
             if (index !== 1) ref.current?.close();
           }}
         >
-          <BottomSheetHeader style={{ marginBottom: 0 }} onPressExit={() => ref.current?.close()} />
-          <DateTimePicker
-            minuteInterval={5}
-            mode={mode}
-            display="spinner"
-            value={date}
-            onChange={onChange}
-          />
+          <BottomSheetView style={{ flex: 1 }}>
+            <BottomSheetHeader
+              style={{ marginBottom: 0 }}
+              onPressExit={() => ref.current?.close()}
+            />
+            <DateTimePicker
+              minuteInterval={5}
+              mode={mode}
+              display="spinner"
+              value={date}
+              onChange={onChange}
+            />
+          </BottomSheetView>
         </BottomSheetModal>
       )}
     </View>

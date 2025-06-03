@@ -4,6 +4,7 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
   BottomSheetTextInput,
+  BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import LottieView from 'lottie-react-native';
 import { useCallback } from 'react';
@@ -162,7 +163,7 @@ const MoimPage = () => {
             if (index !== 1) closeBottomSheet();
           }}
         >
-          <View style={{ padding: 14 }}>
+          <BottomSheetView style={{ padding: 14 }}>
             <BottomSheetHeader
               title="모임 생성하기"
               onPressExit={() => closeBottomSheet()}
@@ -199,7 +200,7 @@ const MoimPage = () => {
                 올바른 입력이 아닙니다. 다시 한번 확인해주세요.
               </Text>
             )}
-          </View>
+          </BottomSheetView>
         </BottomSheetModal>
         <NavigationBar page="social" />
       </BottomSheetModalProvider>

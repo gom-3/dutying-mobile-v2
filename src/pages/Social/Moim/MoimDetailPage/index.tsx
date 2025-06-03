@@ -2,6 +2,7 @@ import {
   BottomSheetBackdrop,
   BottomSheetModal,
   BottomSheetModalProvider,
+  BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import { useQuery } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
@@ -165,40 +166,47 @@ const MoimDetailPage = () => {
             snapPoints={[100, 350, 700]}
             index={1}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingHorizontal: 20,
-              }}
-            >
-              <View style={{ width: 24 }} />
-              <View style={styles.bottomSheetHeader}>
-                <Text style={styles.bottomSheetHeaderText}>모임원</Text>
-              </View>
-              <TouchableOpacity onPress={openInviteModal}>
-                <View
-                  style={{ width: 24, height: 24, justifyContent: 'center', alignItems: 'center' }}
-                >
-                  <PlusIcon />
+            <BottomSheetView style={{ flex: 1 }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  paddingHorizontal: 20,
+                }}
+              >
+                <View style={{ width: 24 }} />
+                <View style={styles.bottomSheetHeader}>
+                  <Text style={styles.bottomSheetHeaderText}>모임원</Text>
                 </View>
-              </TouchableOpacity>
-            </View>
-            <ScrollView>
-              {moim.memberInfoList.map((member) => (
-                <View key={`change host ${member.accountId}`} style={styles.member}>
-                  <View style={styles.memberProfile}>
-                    <Image
-                      source={{ uri: `data:image/png;base64,${member.profileImgBase64}` }}
-                      style={styles.memberProfileImage}
-                    />
-                    <Text>{member.name}</Text>
+                <TouchableOpacity onPress={openInviteModal}>
+                  <View
+                    style={{
+                      width: 24,
+                      height: 24,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <PlusIcon />
                   </View>
-                </View>
-              ))}
-              <View style={{ height: 400 }} />
-            </ScrollView>
+                </TouchableOpacity>
+              </View>
+              <ScrollView>
+                {moim.memberInfoList.map((member) => (
+                  <View key={`change host ${member.accountId}`} style={styles.member}>
+                    <View style={styles.memberProfile}>
+                      <Image
+                        source={{ uri: `data:image/png;base64,${member.profileImgBase64}` }}
+                        style={styles.memberProfileImage}
+                      />
+                      <Text>{member.name}</Text>
+                    </View>
+                  </View>
+                ))}
+                <View style={{ height: 400 }} />
+              </ScrollView>
+            </BottomSheetView>
           </BottomSheetModal>
         </SafeAreaView>
       </BottomSheetModalProvider>

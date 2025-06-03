@@ -3,6 +3,7 @@ import {
   type BottomSheetBackdropProps,
   BottomSheetModal,
   BottomSheetTextInput,
+  BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import {
@@ -160,7 +161,7 @@ const Actions = ({ isActionOpen, moim, close }: Props) => {
         snapPoints={[100, 300]}
         keyboardBehavior="interactive"
       >
-        <View style={{ padding: 14 }}>
+        <BottomSheetView style={{ flex: 1, padding: 14 }}>
           <BottomSheetHeader
             title="모임 이름 변경"
             onPressExit={closeNameBottomSheet}
@@ -197,7 +198,7 @@ const Actions = ({ isActionOpen, moim, close }: Props) => {
               올바른 입력이 아닙니다. 다시 한번 확인해주세요.
             </Text>
           )}
-        </View>
+        </BottomSheetView>
       </BottomSheetModal>
       <BottomSheetModal
         enableContentPanningGesture={false}
@@ -207,38 +208,42 @@ const Actions = ({ isActionOpen, moim, close }: Props) => {
         index={1}
         snapPoints={[100, 350, 700]}
       >
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingHorizontal: 20,
-          }}
-        >
-          <View style={{ width: 24 }} />
-          <View style={styles.bottomSheetHeader}>
-            <Text style={styles.bottomSheetHeaderText}>모임원</Text>
-          </View>
-          <TouchableOpacity onPress={() => openModal('invite', inviteRef)}>
-            <View style={{ width: 24, height: 24, justifyContent: 'center', alignItems: 'center' }}>
-              <PlusIcon />
+        <BottomSheetView style={{ flex: 1 }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingHorizontal: 20,
+            }}
+          >
+            <View style={{ width: 24 }} />
+            <View style={styles.bottomSheetHeader}>
+              <Text style={styles.bottomSheetHeaderText}>모임원</Text>
             </View>
-          </TouchableOpacity>
-        </View>
-        <ScrollView>
-          {moim.memberInfoList.map((member) => (
-            <View key={`change host ${member.accountId}`} style={styles.member}>
-              <View style={styles.memberProfile}>
-                <Image
-                  source={{ uri: `data:image/png;base64,${member.profileImgBase64}` }}
-                  style={styles.memberProfileImage}
-                />
-                <Text>{member.name}</Text>
+            <TouchableOpacity onPress={() => openModal('invite', inviteRef)}>
+              <View
+                style={{ width: 24, height: 24, justifyContent: 'center', alignItems: 'center' }}
+              >
+                <PlusIcon />
               </View>
-            </View>
-          ))}
-          <View style={{ height: 400 }} />
-        </ScrollView>
+            </TouchableOpacity>
+          </View>
+          <ScrollView>
+            {moim.memberInfoList.map((member) => (
+              <View key={`change host ${member.accountId}`} style={styles.member}>
+                <View style={styles.memberProfile}>
+                  <Image
+                    source={{ uri: `data:image/png;base64,${member.profileImgBase64}` }}
+                    style={styles.memberProfileImage}
+                  />
+                  <Text>{member.name}</Text>
+                </View>
+              </View>
+            ))}
+            <View style={{ height: 400 }} />
+          </ScrollView>
+        </BottomSheetView>
       </BottomSheetModal>
       <BottomSheetModal
         enableContentPanningGesture={false}
@@ -248,48 +253,53 @@ const Actions = ({ isActionOpen, moim, close }: Props) => {
         backdropComponent={renderBackdrop}
         index={1}
       >
-        <View style={styles.bottomSheetHeader}>
-          <Text style={styles.bottomSheetHeaderText}>모임장 변경</Text>
-        </View>
-        <ScrollView>
-          {moim.memberInfoList.map((member) => (
-            <View key={`change host ${member.accountId}`} style={styles.member}>
-              <View style={styles.memberProfile}>
-                <Image
-                  source={{ uri: `data:image/png;base64,${member.profileImgBase64}` }}
-                  style={styles.memberProfileImage}
-                />
-                <Text>{member.name}</Text>
-              </View>
-              <TouchableOpacity
-                onPress={() => {
-                  if (moim.hostInfo.accountId !== member.accountId)
-                    openModal('host', hostRef, { accountId: member.accountId, name: member.name });
-                }}
-                style={[
-                  styles.changeButton,
-                  {
-                    borderColor:
-                      moim.hostInfo.accountId === member.accountId ? COLOR.main1 : COLOR.sub3,
-                  },
-                ]}
-              >
-                <Text
+        <BottomSheetView style={{ flex: 1 }}>
+          <View style={styles.bottomSheetHeader}>
+            <Text style={styles.bottomSheetHeaderText}>모임장 변경</Text>
+          </View>
+          <ScrollView>
+            {moim.memberInfoList.map((member) => (
+              <View key={`change host ${member.accountId}`} style={styles.member}>
+                <View style={styles.memberProfile}>
+                  <Image
+                    source={{ uri: `data:image/png;base64,${member.profileImgBase64}` }}
+                    style={styles.memberProfileImage}
+                  />
+                  <Text>{member.name}</Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (moim.hostInfo.accountId !== member.accountId)
+                      openModal('host', hostRef, {
+                        accountId: member.accountId,
+                        name: member.name,
+                      });
+                  }}
                   style={[
-                    styles.changeButtonText,
+                    styles.changeButton,
                     {
-                      color:
+                      borderColor:
                         moim.hostInfo.accountId === member.accountId ? COLOR.main1 : COLOR.sub3,
                     },
                   ]}
                 >
-                  {moim.hostInfo.accountId === member.accountId ? '모임장' : '변경'}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          ))}
-          <View style={{ height: 400 }} />
-        </ScrollView>
+                  <Text
+                    style={[
+                      styles.changeButtonText,
+                      {
+                        color:
+                          moim.hostInfo.accountId === member.accountId ? COLOR.main1 : COLOR.sub3,
+                      },
+                    ]}
+                  >
+                    {moim.hostInfo.accountId === member.accountId ? '모임장' : '변경'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ))}
+            <View style={{ height: 400 }} />
+          </ScrollView>
+        </BottomSheetView>
       </BottomSheetModal>
       <BottomSheetModal
         ref={kickRef}
@@ -299,54 +309,56 @@ const Actions = ({ isActionOpen, moim, close }: Props) => {
         backdropComponent={renderBackdrop}
         index={1}
       >
-        <View style={styles.bottomSheetHeader}>
-          <Text style={styles.bottomSheetHeaderText}>모임원 추방</Text>
-        </View>
-        <ScrollView>
-          {moim.memberInfoList.map((member) => (
-            <View key={`kick ${member.accountId}`} style={styles.member}>
-              <View style={styles.memberProfile}>
-                <Image
-                  source={{ uri: `data:image/png;base64,${member.profileImgBase64}` }}
-                  style={styles.memberProfileImage}
-                />
-                <Text>{member.name}</Text>
-              </View>
-              {moim.hostInfo.accountId === member.accountId ? (
-                <View style={styles.moimHostView}>
-                  <Text style={styles.moimHostText}>모임장</Text>
+        <BottomSheetView style={{ flex: 1 }}>
+          <View style={styles.bottomSheetHeader}>
+            <Text style={styles.bottomSheetHeaderText}>모임원 추방</Text>
+          </View>
+          <ScrollView>
+            {moim.memberInfoList.map((member) => (
+              <View key={`kick ${member.accountId}`} style={styles.member}>
+                <View style={styles.memberProfile}>
+                  <Image
+                    source={{ uri: `data:image/png;base64,${member.profileImgBase64}` }}
+                    style={styles.memberProfileImage}
+                  />
+                  <Text>{member.name}</Text>
                 </View>
-              ) : (
-                <Pressable
-                  style={({ pressed }) => ({
-                    borderRadius: 5,
-                    borderColor: COLOR.sub3,
-                    borderWidth: 1,
-                    paddingHorizontal: 8,
-                    paddingVertical: 4,
-                    backgroundColor: pressed ? COLOR.sub3 : 'white',
-                  })}
-                  onPress={() =>
-                    openModal('kick', kickRef, { accountId: member.accountId, name: member.name })
-                  }
-                >
-                  {({ pressed }) => (
-                    <Text
-                      style={{
-                        color: pressed ? 'white' : COLOR.sub3,
-                        fontSize: 12,
-                        fontFamily: 'Apple500',
-                      }}
-                    >
-                      추방
-                    </Text>
-                  )}
-                </Pressable>
-              )}
-            </View>
-          ))}
-          <View style={{ height: 400 }} />
-        </ScrollView>
+                {moim.hostInfo.accountId === member.accountId ? (
+                  <View style={styles.moimHostView}>
+                    <Text style={styles.moimHostText}>모임장</Text>
+                  </View>
+                ) : (
+                  <Pressable
+                    style={({ pressed }) => ({
+                      borderRadius: 5,
+                      borderColor: COLOR.sub3,
+                      borderWidth: 1,
+                      paddingHorizontal: 8,
+                      paddingVertical: 4,
+                      backgroundColor: pressed ? COLOR.sub3 : 'white',
+                    })}
+                    onPress={() =>
+                      openModal('kick', kickRef, { accountId: member.accountId, name: member.name })
+                    }
+                  >
+                    {({ pressed }) => (
+                      <Text
+                        style={{
+                          color: pressed ? 'white' : COLOR.sub3,
+                          fontSize: 12,
+                          fontFamily: 'Apple500',
+                        }}
+                      >
+                        추방
+                      </Text>
+                    )}
+                  </Pressable>
+                )}
+              </View>
+            ))}
+            <View style={{ height: 400 }} />
+          </ScrollView>
+        </BottomSheetView>
       </BottomSheetModal>
     </View>
   );

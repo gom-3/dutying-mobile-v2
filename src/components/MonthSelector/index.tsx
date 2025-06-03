@@ -1,4 +1,4 @@
-import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {
   View,
@@ -51,15 +51,20 @@ const MonthSelector = ({ isImage, style }: Props) => {
             if (index !== 1) ref.current?.close();
           }}
         >
-          <BottomSheetHeader style={{ marginBottom: 0 }} onPressExit={() => ref.current?.close()} />
-          <DateTimePicker
-            maximumDate={new Date(2025, 0, 1)}
-            minimumDate={new Date(2020, 0, 1)}
-            mode="date"
-            display="spinner"
-            value={date}
-            onChange={onChangeDate}
-          />
+          <BottomSheetView style={{ flex: 1 }}>
+            <BottomSheetHeader
+              style={{ marginBottom: 0 }}
+              onPressExit={() => ref.current?.close()}
+            />
+            <DateTimePicker
+              maximumDate={new Date(2030, 0, 1)}
+              minimumDate={new Date(2020, 0, 1)}
+              mode="date"
+              display="spinner"
+              value={date}
+              onChange={onChangeDate}
+            />
+          </BottomSheetView>
         </BottomSheetModal>
       )}
     </View>

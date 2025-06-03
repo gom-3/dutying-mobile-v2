@@ -1,4 +1,8 @@
-import { type BottomSheetBackdropProps, BottomSheetModal } from '@gorhom/bottom-sheet';
+import {
+  type BottomSheetBackdropProps,
+  BottomSheetModal,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
 import { TouchableOpacity, View, Text, ScrollView, Image, StyleSheet } from 'react-native';
 import { type Friend } from '@/api/friend';
 import CheckCircleEmpty from '@/assets/svgs/check-circle-empty.svg';
@@ -45,46 +49,48 @@ const CollectionContoller = ({ friends, backdrop }: Props) => {
         snapPoints={[300, 550, 700]}
         index={1}
       >
-        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 8 }}>
-          <Text style={{ fontFamily: 'Apple', fontSize: 16, color: COLOR.sub2 }}>
-            친구 모아보기
-          </Text>
-        </View>
-        <View
-          style={{
-            marginHorizontal: 24,
-            marginTop: 24,
-            marginBottom: 16,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Text style={{ color: COLOR.sub3, fontFamily: 'Apple500', fontSize: 12 }}>
-            총 {friends?.length}명
-          </Text>
-          <Text style={{ color: COLOR.main2, fontFamily: 'Apple500', fontSize: 12 }}>
-            {favoriteFriends?.length}명 선택
-          </Text>
-        </View>
-        <ScrollView>
-          {friends?.map((friend) => (
-            <View key={`friends ${friend.accountId}`} style={styles.member}>
-              <View style={styles.memberProfile}>
-                <Image
-                  source={{ uri: `data:image/png;base64,${friend.profileImgBase64}` }}
-                  style={styles.memberProfileImage}
-                />
-                <Text>{friend.name}</Text>
+        <BottomSheetView style={{ flex: 1 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 8 }}>
+            <Text style={{ fontFamily: 'Apple', fontSize: 16, color: COLOR.sub2 }}>
+              친구 모아보기
+            </Text>
+          </View>
+          <View
+            style={{
+              marginHorizontal: 24,
+              marginTop: 24,
+              marginBottom: 16,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Text style={{ color: COLOR.sub3, fontFamily: 'Apple500', fontSize: 12 }}>
+              총 {friends?.length}명
+            </Text>
+            <Text style={{ color: COLOR.main2, fontFamily: 'Apple500', fontSize: 12 }}>
+              {favoriteFriends?.length}명 선택
+            </Text>
+          </View>
+          <ScrollView>
+            {friends?.map((friend) => (
+              <View key={`friends ${friend.accountId}`} style={styles.member}>
+                <View style={styles.memberProfile}>
+                  <Image
+                    source={{ uri: `data:image/png;base64,${friend.profileImgBase64}` }}
+                    style={styles.memberProfileImage}
+                  />
+                  <Text>{friend.name}</Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() => pressFavoiteCheckButton(friend.isFavorite, friend.accountId)}
+                >
+                  {friend.isFavorite ? <CheckCircleFill /> : <CheckCircleEmpty />}
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                onPress={() => pressFavoiteCheckButton(friend.isFavorite, friend.accountId)}
-              >
-                {friend.isFavorite ? <CheckCircleFill /> : <CheckCircleEmpty />}
-              </TouchableOpacity>
-            </View>
-          ))}
-          <View style={{ height: 100 }} />
-        </ScrollView>
+            ))}
+            <View style={{ height: 100 }} />
+          </ScrollView>
+        </BottomSheetView>
       </BottomSheetModal>
     </View>
   );
